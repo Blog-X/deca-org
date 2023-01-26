@@ -1,17 +1,16 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import {
-  HuddleClientProvider,
-  getHuddleClient,
-} from "@huddle01/huddle01-client";
+import { huddleClient } from '@/constants/api.constants';
 import { useHuddleStore } from "@huddle01/huddle01-client/store";
 import PeerVideoAudioElem from "./PeerVideoAudioElem";
 import MeVideoElem from "./MeVideoElem";
 
 const Meeting = (props) => {
-  const huddleClient = getHuddleClient(
-    "78bdd193c8cd9b7d766f37cc640893dea83ef3e1c89c45821fbf7ffa41278709"
-  );
+  // const huddleClient = getHuddleClient(
+  //   "78bdd193c8cd9b7d766f37cc640893dea83ef3e1c89c45821fbf7ffa41278709"
+  // );
+  const [nameArr, setNameArr] = useState([{name: "", address: ""}]);
+  const [name, setName] = useState("");
   const peersKeys = useHuddleStore((state) => Object.keys(state.peers));
   const lobbyPeers = useHuddleStore((state) => state.lobbyPeers);
   const roomState = useHuddleStore((state) => state.roomState);
@@ -19,9 +18,9 @@ const Meeting = (props) => {
   const recordings = useHuddleStore((state) => state.recordings);
   const roomId = useHuddleStore((state) => state.roomState.roomId);
   const peerId = useHuddleStore((state) => state.peerId);
-  const room = useHuddleStore((state) => state.roomState);
-  const peers = useHuddleStore((state) => state.peers);
-  //   const [currentRoomId, setCurrentRoomId] = useState("");
+  // const room = useHuddleStore((state) => state.roomState);
+  // const peers = useHuddleStore((state) => state.peers);
+  // console.log({ peers });
   const handleToggleRoomLock = async () => {
     if (!huddleClient) return;
     try {
@@ -31,6 +30,9 @@ const Meeting = (props) => {
       console.log({ error });
     }
   };
+  const setPeerName = (peerId, name) => {
+
+  }
   const handleJoin = async () => {
     try {
       await huddleClient.join(props.currentRoomId, {
@@ -38,6 +40,7 @@ const Meeting = (props) => {
         wallet: "",
         ens: "axit.eth",
       });
+      setNameArr([...nameArr, {name: name, address: "0xb17bc8c23e53f463F0332008D518121B74b260d2"}])
       console.log("joined");
     } catch (error) {
       console.log({ error });
@@ -73,16 +76,14 @@ const Meeting = (props) => {
   //   han
   //   }, []);
   return (
-    <HuddleClientProvider value={huddleClient}>
       <div className="container">
         <div>
-          <div></div>
-          {/* <input
+          <input
             type="text"
             onChange={(e) => {
-              setCurrentRoomId(e.target.value);
+              setName(e.target.value);
             }}
-          /> */}
+          />
           <button onClick={handleJoin}>Join Room</button>
           <button onClick={handleLobbyJoin}>Join Lobby</button>
           <h2>Room Id: {roomId}</h2>
@@ -100,6 +101,16 @@ const Meeting = (props) => {
             Toggle Room Lock
           </button>
         </div>
+        {
+          nameArr.map((name) => {
+            return (
+              <div>
+                <h2>{name.name}</h2>
+                <h2>{name.address}</h2>
+              </div>
+            )
+          })
+        }
         <MeVideoElem />
         <div>
           <div className="">
@@ -164,6 +175,16 @@ const Meeting = (props) => {
               </button>
             )}
           </div>
+          <div onClick={ async () => await huddleClient.muteMic()}>
+          <button>
+            Mute mic
+          </button>
+          </div>
+          <div>
+            <button onClick={async () => await  huddleClient.unmuteMic()}>
+              Unmute mic
+            </button>
+          </div>
 
           {/* {lobbyPeers[0] && <h2>Lobby Peers</h2>}
           <div>
@@ -188,7 +209,6 @@ const Meeting = (props) => {
           </div>
         </div>
       </div>
-    </HuddleClientProvider>
   );
 };
 
