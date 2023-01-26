@@ -9,8 +9,9 @@ const Meeting = (props) => {
   // const huddleClient = getHuddleClient(
   //   "78bdd193c8cd9b7d766f37cc640893dea83ef3e1c89c45821fbf7ffa41278709"
   // );
-  const [nameArr, setNameArr] = useState([{name: "", address: ""}]);
+  const [nameArr, setNameArr] = useState([{name: "", address: "", id: ""}]);
   const [name, setName] = useState("");
+  const [hostName, setHostName] = useState("");
   const peersKeys = useHuddleStore((state) => Object.keys(state.peers));
   const lobbyPeers = useHuddleStore((state) => state.lobbyPeers);
   const roomState = useHuddleStore((state) => state.roomState);
@@ -18,6 +19,7 @@ const Meeting = (props) => {
   const recordings = useHuddleStore((state) => state.recordings);
   const roomId = useHuddleStore((state) => state.roomState.roomId);
   const peerId = useHuddleStore((state) => state.peerId);
+  const hostId = useHuddleStore((state) => state.hostId);
   // const room = useHuddleStore((state) => state.roomState);
   // const peers = useHuddleStore((state) => state.peers);
   // console.log({ peers });
@@ -30,9 +32,21 @@ const Meeting = (props) => {
       console.log({ error });
     }
   };
-  const setPeerName = (peerId, name) => {
-
-  }
+  useEffect(() => {
+    const setPeerName = (peerId) => {
+      let peerName = "";
+      nameArr.forEach((peer) => {
+        if(peer.id === peerId) {
+          peerName = peer.name;
+        }
+        if (peer.id === hostId) {
+          setHostName(peer.name);
+        }
+      })
+      setName(peerName)
+    }
+    setPeerName(peerId)
+  }, [])
   const handleJoin = async () => {
     try {
       await huddleClient.join(props.currentRoomId, {
@@ -40,12 +54,13 @@ const Meeting = (props) => {
         wallet: "",
         ens: "axit.eth",
       });
-      setNameArr([...nameArr, {name: name, address: "0xb17bc8c23e53f463F0332008D518121B74b260d2"}])
+      setNameArr([...nameArr, {name: name, address: "0xb17bc8c23e53f463F0332008D518121B74b260d2", id: peerId}])
       console.log("joined");
     } catch (error) {
       console.log({ error });
     }
   };
+  // console.log(nameArr)
   const handleLobbyJoin = async () => {
     try {
       const res = huddleClient.addLobbyPeer([
@@ -76,7 +91,7 @@ const Meeting = (props) => {
   //   han
   //   }, []);
   return (
-      <div className="container">
+      <div className="container flex flex-col">
         <div>
           <input
             type="text"
@@ -87,8 +102,8 @@ const Meeting = (props) => {
           <button onClick={handleJoin}>Join Room</button>
           <button onClick={handleLobbyJoin}>Join Lobby</button>
           <h2>Room Id: {roomId}</h2>
-          <h2>Host Id: {huddleClient.hostId}</h2>
-          <h2>Peer Id: {peerId}</h2>
+          <h2>Host Id: {hostName}</h2>
+          <h2>Peer Id: {name}</h2>
           <h2 className={`text-${!roomState.joined ? "red" : "green"}`}>
             Room Joined:&nbsp;{roomState.joined.toString()}
           </h2>
@@ -101,7 +116,7 @@ const Meeting = (props) => {
             Toggle Room Lock
           </button>
         </div>
-   
+        
         <MeVideoElem />
         <div>
           <div className="">
@@ -177,12 +192,12 @@ const Meeting = (props) => {
             </button>
           </div>
 
-          {/* {lobbyPeers[0] && <h2>Lobby Peers</h2>}
+          {lobbyPeers[0] && <h2>Lobby Peers</h2>}
           <div>
             {lobbyPeers.map((peer) => (
               <div>{peer.peerId}</div>
             ))}
-          </div> */}
+          </div>
           {huddleClient.lobby}
           {peersKeys[0] && <h2>Peers</h2>}
 
