@@ -101,16 +101,7 @@ const Meeting = (props) => {
             Toggle Room Lock
           </button>
         </div>
-        {
-          nameArr.map((name) => {
-            return (
-              <div>
-                <h2>{name.name}</h2>
-                <h2>{name.address}</h2>
-              </div>
-            )
-          })
-        }
+   
         <MeVideoElem />
         <div>
           <div className="">
