@@ -8,7 +8,7 @@ const MeetingPage = () => {
   const meetId = router.query.org_team_slug;
   return <div>
     <h1>
-        {meetId}
+        {/* {meetId} */}
         <Meeting currentRoomId={meetId} />
     </h1>
   </div>;
