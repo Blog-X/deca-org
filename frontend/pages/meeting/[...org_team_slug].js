@@ -1,15 +1,17 @@
+import Meeting from "@/components/huddle/Meeting";
 import { useRouter } from "next/router";
 
 import React from "react";
 
-const Meeting = () => {
+const MeetingPage = () => {
   const router = useRouter();
-  const slug = router.query.org_team_slug;
+  const meetId = router.query.org_team_slug;
   return <div>
     <h1>
-        {slug}
+        {meetId}
+        <Meeting currentRoomId={meetId} />
     </h1>
   </div>;
 };
 
-export default Meeting;
+export default MeetingPage;
