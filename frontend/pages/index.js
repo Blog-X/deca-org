@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from 'next/link'
 import {
   APP_NAME,
   APP_SUBTITLE,
@@ -8,6 +9,8 @@ import {
 } from "@/constants/app.constants";
 
 export default function Home() {
+  
+
   return (
     <>
       <Head>
@@ -46,14 +49,18 @@ export default function Home() {
           <div className="md:h-1/3 hidden md:flex"></div>
           <div className="md:h-1/3 hidden md:flex"></div>
           <div className="bg-blue h-screen w-full justify-end m">
+          <Link href= '/login'>
             <button
               type="button"
               className="md:mt-12 w-full md:w-1/2 h-20 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2"
-            >
+              redirect="/login"
+           >
               <pre className="text-sm">Already have an account?</pre>
               Login
             </button>
+            </Link>
             <br />
+            <Link href= '/signup'>
             <button
               type="button"
               className="mt-5 w-full md:w-1/2 h-20 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800  rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2"
@@ -61,6 +68,7 @@ export default function Home() {
               <pre className="text-sm">New to us?</pre>
               Sign-up
             </button>
+            </Link>
           </div>
         </div>
       </div>
