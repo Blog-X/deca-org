@@ -95,4 +95,4 @@ const PeerVideoAudioElem = ({ peerIdAtIndex }) => {
   );
 };
 
-export default React.memo(PeerVideoAudioElem);
+export default PeerVideoAudioElem;

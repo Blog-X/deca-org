@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState } from "react";
 import {
   HuddleClientProvider,
@@ -8,7 +9,6 @@ import PeerVideoAudioElem from "./PeerVideoAudioElem";
 import MeVideoElem from "./MeVideoElem";
 
 const Meeting = (props) => {
-  console.log(props);
   const huddleClient = getHuddleClient(
     "78bdd193c8cd9b7d766f37cc640893dea83ef3e1c89c45821fbf7ffa41278709"
   );
@@ -193,3 +193,5 @@ const Meeting = (props) => {
 };
 
 export default Meeting;
+
+
