@@ -24,7 +24,7 @@ export default function livepeer() {
         {/* <VideoPlayer /> */}
         {/* <LiveStream /> */}
         <UploadVideoAsset /> 
-       // <VideoNFTMinting />
+            {/* <VideoNFTMinting /> */}
       </LivepeerConfig>
       
     );
