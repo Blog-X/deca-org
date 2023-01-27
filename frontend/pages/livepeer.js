@@ -23,8 +23,8 @@ export default function livepeer() {
       <LivepeerConfig client={livepeerClient} >
         {/* <VideoPlayer /> */}
         {/* <LiveStream /> */}
-        {/* <UploadVideoAsset /> */}
-        <VideoNFTMinting />
+        <UploadVideoAsset /> 
+       // <VideoNFTMinting />
       </LivepeerConfig>
       
     );
