@@ -8,7 +8,6 @@ const PeerVideoAudioElem = ({ peerIdAtIndex }) => {
   const shareScreenRef = useRef(null);
 
   const isSharePaused = useHuddleStore((state) => state.peers[peerIdAtIndex].isSharePaused);
-  console.log(isSharePaused);
 
   const peerCamTrack = useHuddleStore(
     useCallback(

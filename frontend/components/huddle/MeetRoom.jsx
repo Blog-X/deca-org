@@ -18,7 +18,7 @@ const MeetRoom = (props) => {
   const hostId = useHuddleStore((state) => state.hostId);
   const hasJoined = useHuddleStore((state) => state.roomState.joined);
 
-  const [nameArr, setNameArr] = useState([{ name: "", address: "", id: "" }]);
+  const [nameArr, setNameArr] = useState([]);
   const [name, setName] = useState(peerId);
   const [hostName, setHostName] = useState("");
 
@@ -62,7 +62,7 @@ const MeetRoom = (props) => {
   };
 
   return (
-    <div  className="h-screen w-screen overflow-x-hidden ">
+    <div className="h-screen w-screen overflow-x-hidden ">
       {!hasJoined && (
         <div>
           <NotJoined
@@ -71,13 +71,22 @@ const MeetRoom = (props) => {
             handleJoin={handleJoin}
             ethAddress={props.ethAddress}
             peerId={peerId}
+            name={name}
+            nameArr={nameArr}
             setNameArr={setNameArr}
           />
         </div>
       )}
-      {hasJoined && <div>
-        <Joined name={name} roomId={props.currentRoomId} peersKeys={peersKeys}/>
-      </div>}
+      {hasJoined && (
+        <div>
+          <Joined
+            name={name}
+            roomId={props.currentRoomId}
+            peersKeys={peersKeys}
+            nameArr={nameArr}
+          />
+        </div>
+      )}
     </div>
   );
 };

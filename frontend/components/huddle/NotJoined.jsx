@@ -16,9 +16,9 @@ const NotJoined = (props) => {
         ens: "axit.eth",
       });
       props.setNameArr([
-        ...nameArr,
+        ...props.nameArr,
         {
-          name: "name",
+          name: props.name,
           address: props.ethAddress,
           id: props.peerId,
         },
