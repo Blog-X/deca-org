@@ -29,6 +29,7 @@ const Joined = (props) => {
             <div className="flex flex-row flex-wrap max-h-3/4 overflow-y-auto">
               {props.peersKeys.map((key) => (
                 <div
+                  key={`peer-${key}`}
                   style={{ width: videoWidth }}
                   className="space-between p-2 m-2 bg-base-200 h-fit rounded-lg mx-auto "
                 >
@@ -68,7 +69,8 @@ const Joined = (props) => {
                     </li>
                   ))} */}
                   {props.peersKeys.map((key, i) => (
-                    <div className="p-2">
+                    <div className="p-2"
+                    key={`peerId${i}`}>
                       <li key={i}>
                         <span>{i + 2}.</span>
                         <span className="p-1">{key}</span>

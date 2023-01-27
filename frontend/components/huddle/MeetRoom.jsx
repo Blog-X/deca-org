@@ -23,7 +23,6 @@ const MeetRoom = (props) => {
   const [name, setName] = useState(peerId);
   const [hostName, setHostName] = useState("");
 
-
   // console.log(props);
   useEffect(() => {
     const setPeerName = (peerId) => {
@@ -88,18 +87,16 @@ const MeetRoom = (props) => {
             nameArr={nameArr}
           />
           {peersKeys.map((key) => (
-                <div
-                  style={{ width: '100%' }}
-                  className="space-between p-2 m-2 bg-base-300 h-fit rounded-lg mx-auto "
-                >
-                {/* <hr /> */}
-                <br />
-                  <ShareScreen
-                    key={`peerId-${key}`}
-                    peerId={key}
-                  />
-                </div>
-              ))}
+            <div
+              key={`peer-${key}`}
+              style={{ width: "100%" }}
+              className="space-between p-2 m-2 bg-base-300 h-fit rounded-lg mx-auto "
+            >
+              {/* <hr /> */}
+              <br />
+              <ShareScreen key={`peerId-${key}`} peerId={key} />
+            </div>
+          ))}
         </div>
       )}
     </div>
