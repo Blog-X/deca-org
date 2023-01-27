@@ -11,11 +11,11 @@ const MeVideoElem = () => {
     if (videoRef.current) {
       videoRef.current.srcObject = stream;
     }
-    console.log({ stream });
+    // console.log({ stream });
   }, [stream]);
   return (
-    <video
-      style={{ width: "80%" }}
+    videoRef && <video
+      style={{ width: "100%" }}
       ref={videoRef}
       autoPlay
       muted
