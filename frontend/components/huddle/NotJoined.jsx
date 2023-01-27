@@ -65,7 +65,7 @@ const NotJoined = (props) => {
                   ></path>
                 </svg>
                 <span>
-                  Please note that this name will be final and can't be changed
+                  Please note that this name will be final and can&apos;t be changed
                   henceforth in the meeting.
                 </span>
               </div>

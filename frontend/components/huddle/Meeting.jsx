@@ -192,14 +192,14 @@ const Meeting = (props) => {
             </button>
           </div>
 
-          {lobbyPeers[0] && <h2>Lobby Peers</h2>}
+          {/* {lobbyPeers[0] && <h2>Lobby Peers</h2>}
           <div>
             {lobbyPeers.map((peer) => (
               <div>{peer.peerId}</div>
             ))}
           </div>
           {huddleClient.lobby}
-          {peersKeys[0] && <h2>Peers</h2>}
+          {peersKeys[0] && <h2>Peers</h2>} */}
 
           <div className="peers-grid">
             {peersKeys.map((key) => (
