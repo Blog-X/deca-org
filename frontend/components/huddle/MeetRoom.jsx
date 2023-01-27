@@ -6,6 +6,7 @@ import PeerVideoAudioElem from "./PeerVideoAudioElem";
 import MeVideoElem from "./MeVideoElem";
 import NotJoined from "./NotJoined";
 import Joined from "./Joined";
+import ShareScreen from "./ShareScreen";
 
 const MeetRoom = (props) => {
   const peersKeys = useHuddleStore((state) => Object.keys(state.peers));
@@ -85,6 +86,19 @@ const MeetRoom = (props) => {
             peersKeys={peersKeys}
             nameArr={nameArr}
           />
+          {peersKeys.map((key) => (
+                <div
+                  style={{ width: '100%' }}
+                  className="space-between p-2 m-2 bg-base-300 h-fit rounded-lg mx-auto "
+                >
+                {/* <hr /> */}
+                <br />
+                  <ShareScreen
+                    key={`peerId-${key}`}
+                    peerId={key}
+                  />
+                </div>
+              ))}
         </div>
       )}
     </div>

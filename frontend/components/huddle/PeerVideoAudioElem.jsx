@@ -87,13 +87,13 @@ const PeerVideoAudioElem = ({ peerIdAtIndex }) => {
       />
       <audio ref={audioRef} autoPlay playsInline controls={false}></audio>
       {/* <div>{peerIdAtIndex}</div> */}
-      { isSharePaused && <video
+      {/* { isSharePaused && <video
         ref={shareScreenRef}
         muted
         autoPlay
         style={{ width: "100%" }}
   
-      />}
+      />} */}
     </div>
   );
 };
