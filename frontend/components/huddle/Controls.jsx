@@ -12,12 +12,17 @@ const Controls = (props) => {
   };
 
   const peerId = useHuddleStore((state) => state.peerId);
+  const hostId = useHuddleStore((state) => state.hostId);
 
   const peers = useHuddleStore((state) => state.peers);
   // console.log(peers);
   const [mic, setMic] = useState(true);
   const [cam, setCam] = useState(true);
   const [share, setShare] = useState(false);
+
+  const roomState = useHuddleStore((state) => state.roomState);
+  const recordingState = useHuddleStore((state) => state.recordingState);
+  const recordings = useHuddleStore((state) => state.recordings);
 
   const getActiveMicPeer = () => {
     let activePeer = null;
@@ -129,7 +134,11 @@ const Controls = (props) => {
           height={20}
         />
       </button>
-      <button onClick={ () => {setShare(!share)}} >
+      <button
+        onClick={() => {
+          setShare(!share);
+        }}
+      >
         {!share ? (
           <button
             className={btnStyles.btnInactive}
@@ -160,6 +169,26 @@ const Controls = (props) => {
           </button>
         )}
       </button>
+      {hostId === peerId &&
+        (recordingState.inProgress === true ? (
+          <button
+            className={btnStyles.btnInactive}
+            onClick={async () => await huddleClient.stopRecording({ ipfs: true })}
+          >
+            <span>Stop Recording</span>
+          </button>
+        ) : (
+          <button
+            className={btnStyles.btnInactive}
+            onClick={() =>
+              huddleClient.startRecording({
+                sourceUrl: window.location.href,
+              })
+            }
+          >
+            <span>Start Recording</span>
+          </button>
+        ))}
     </div>
   );
 };
