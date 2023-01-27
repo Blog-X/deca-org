@@ -1,5 +1,5 @@
 import React from 'react';
-import SignMessage from './signMessage';
+import SignMessage from './SignMessage';
 
 export default function SignupComp(){
     return (
