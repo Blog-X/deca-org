@@ -1,13 +1,17 @@
 import React from "react";
-import { darkMode } from "@/constants/colors.constants";
+import { useState } from "react";
 import {
   NOT_JOINED_MEET_TITLE,
   NOT_JOINED_MEET_SUBTITLE,
 } from "@/constants/app.constants";
 
 import { huddleClient } from "@/constants/api.constants";
+import { useHuddleStore } from "@huddle01/huddle01-client/store";
+
 
 const NotJoined = (props) => {
+  const hostId = useHuddleStore((state) => state.hostId);
+console.log(hostId);
   const handleJoin = async () => {
     try {
       await huddleClient.join(props.currentRoomId, {
@@ -23,13 +27,36 @@ const NotJoined = (props) => {
           id: props.peerId,
         },
       ]);
-      alert("joined");
-      console.log("joined");
+      alert("You have joined the meeting as a host.");
+      console.log("lobby entry");
       //   window.location.reload()
     } catch (error) {
       console.log({ error });
     }
   };
+  const [name, setName] = useState();
+  const handleLobby = async () => {
+    try {
+      await huddleClient.requestLobby(name, "", {
+        address: props.ethAddress,
+        wallet: "",
+        ens: "axit.eth",
+      });
+      props.setNameArr([
+        ...props.nameArr,
+        {
+          name: props.name,
+          address: props.ethAddress,
+          id: props.peerId,
+        },
+      ]);
+      alert("You have entered the lobby! Please wait for the host to accept you in the meeting.");
+      console.log("lobby entry");
+      //   window.location.reload()
+    } catch (error) {
+      console.log({ error });
+    }
+  }
 //   console.log(props);
   return (
     <div>
@@ -46,6 +73,7 @@ const NotJoined = (props) => {
               placeholder="Please enter your name"
               onChange={(e) => {
                 props.setName(e.target.value);
+                setName(e.target.value);
               }}
               className="input input-bordered input-primary w-full my-2"
             />
@@ -70,7 +98,7 @@ const NotJoined = (props) => {
                 </span>
               </div>
             </div>
-            <button className="btn" onClick={async () => await handleJoin()}>
+            <button className="btn" onClick = { !hostId ? (async () => await handleJoin()) : (async () => await handleLobby())}>
               Join now
             </button>
           </div>

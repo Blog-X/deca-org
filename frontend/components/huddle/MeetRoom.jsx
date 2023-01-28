@@ -23,7 +23,7 @@ const MeetRoom = (props) => {
   const [name, setName] = useState(peerId);
   const [hostName, setHostName] = useState("");
 
-  console.log(props);
+  // console.log(props);
   useEffect(() => {
     const setPeerName = (peerId) => {
       let peerName = "";
@@ -99,6 +99,7 @@ const MeetRoom = (props) => {
           ))}
         </div>
       )}
+      {peerId === hostId && <h3>recordings: {JSON.stringify(recordings)}</h3>}
     </div>
   );
 };
