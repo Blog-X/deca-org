@@ -186,7 +186,7 @@ const Controls = (props) => {
             className={btnStyles.btnInactive}
             onClick={() =>
               huddleClient.startRecording({
-                address: props.ethAddress,
+                address: props.ethAddress  ? props.ethAddress : hostId,
                 sourceUrl: window.location.href,
               })
             }
