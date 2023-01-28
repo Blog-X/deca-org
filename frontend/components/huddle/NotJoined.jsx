@@ -27,7 +27,7 @@ console.log(hostId);
           id: props.peerId,
         },
       ]);
-      alert("You have joined the meeting as a host.");
+      alert("You have entered the lobby! Please wait for the host to accept you in the meeting.");
       console.log("lobby entry");
       //   window.location.reload()
     } catch (error) {
