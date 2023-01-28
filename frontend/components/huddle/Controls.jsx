@@ -44,6 +44,8 @@ const Controls = (props) => {
     return activePeer;
   };
 
+  const [lobbypeer, setLobbyPeer] = useState("");
+
   return (
     <div className="w-fit flex flex-row mx-auto justify-apart">
       <button
@@ -173,7 +175,9 @@ const Controls = (props) => {
         (recordingState.inProgress === true ? (
           <button
             className={btnStyles.btnInactive}
-            onClick={async () => await huddleClient.stopRecording({ ipfs: true })}
+            onClick={async () =>
+              await huddleClient.stopRecording({ ipfs: true })
+            }
           >
             <span>Stop Recording</span>
           </button>
