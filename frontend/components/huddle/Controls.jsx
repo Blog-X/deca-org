@@ -184,10 +184,10 @@ const Controls = (props) => {
         ) : (
           <button
             className={btnStyles.btnInactive}
-            onClick={() =>
-              huddleClient.startRecording({
-                sourceUrl: window.location.href,
-              })
+            onClick={async () =>
+                await huddleClient.startRecording({
+                  sourceUrl: window.location.href,
+                })
             }
           >
             <span>Start Recording</span>
