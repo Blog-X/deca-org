@@ -25,6 +25,8 @@ const MeetRoom = (props) => {
   const [hostName, setHostName] = useState("");
 
   // console.log(props);
+  
+
   useEffect(() => {
     const setPeerName = (peerId) => {
       let peerName = "";
@@ -96,16 +98,14 @@ const MeetRoom = (props) => {
             >
               {/* <hr /> */}
               <br />
-              {peerId === hostId && (
-                <div className="mx-auto">
-                  <Recordings recordings={recordings} />
-                </div>
-              )}
-
-              <br />
               <ShareScreen key={`peerId-${key}`} peerId={key} />
             </div>
           ))}
+          {peerId === hostId && (
+            <div className="mx-auto">
+              <Recordings recordings={recordings} />
+            </div>
+          )}
         </div>
       )}
     </div>
