@@ -1,18 +1,41 @@
 import Meeting from "@/components/huddle/Meeting";
 import MeetRoom from "@/components/huddle/MeetRoom";
 import { useRouter } from "next/router";
-import { darkMode } from "@/constants/colors.constants";
+import { ethers } from "ethers";
+import { useEffect, useState} from "react";
+
+
 
 import React from "react";
 
 const MeetingPage = () => {
+
+  const [ethAddress, setethAddress] = useState('');
+
+  const getAddress = async () => {
+    if (!window.ethereum)
+      throw new Error("No crypto wallet found. Please install it.");
+
+    await window.ethereum.send("eth_requestAccounts");
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    setethAddress(address);
+  };
+  useEffect(() => {
+    getAddress();
+  }, []);
+  
+ 
+  
   const router = useRouter();
   const meetId = router.query.org_team_slug;
   return <div className="flex flex-col  bg-base-300  min-h-screen py-2">
     <h1>
         {/* {meetId} */}
         {/* <Meeting currentRoomId={meetId} /> */}
-        <MeetRoom currentRoomId={meetId} ethAddress={'0xb17bc8c23e53f463F0332008D518121B74b260d2'} />
+        <MeetRoom currentRoomId={meetId} ethAddress={ethAddress} />
+        
     </h1>
   </div>;
 };
