@@ -18,8 +18,7 @@ const Recordings = ({ recordings }) => {
       </table>
       {recordings.map((recording, i) => {
         return (
-          <div key={i}>
-            <tr>
+            <tr key={i}>
               <th>{i + 1}</th>
               <td>
                 <Link href={recording.url}> Download now! </Link>{" "}
@@ -27,7 +26,6 @@ const Recordings = ({ recordings }) => {
               <td>{recording.duration / 1000}s</td>
               <td>{recording.size} Mb</td>
             </tr>
-          </div>
         );
       })}
     </div>
