@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Controls from "./Controls";
 import MeetNavbar from "./MeetNavbar";
 import MeVideoElem from "./MeVideoElem";
@@ -10,7 +10,12 @@ const Joined = (props) => {
   const peerId = useHuddleStore((state) => state.peerId);
   const hostId = useHuddleStore((state) => state.hostId);
   const lobbyPeers = useHuddleStore((state) => state.lobbyPeers);
+  const peers = useHuddleStore((state) => state.peers);
+  const [activeMicPeer, setActiveMicPeer] = React.useState(null);
+  const isMicPaused = useHuddleStore(state => state.peers[peerId]?.isCamPaused);
 
+  const peerLeaveNotif = useHuddleStore((state) => state.peerLeaveNotif);
+  // console.log(peerLeaveNotif);
   //   console.log(props);
   const getFactor = (num) => {
     if (num == 0) return 1;
@@ -24,8 +29,39 @@ const Joined = (props) => {
     (props.peersKeys.length + getFactor(props.peersKeys.length));
   // console.log(videoWidth);
 
+    const getActiveMicPeer = () => {
+    let activePeer = null;
+    for (const peer in peers) {
+      if (!peers[peer].isMicPaused) {
+        activePeer = peer;
+      }
+    }
+    setActiveMicPeer(activePeer);
+  };
+
+  useEffect(() => {
+    if (lobbyPeers.length > 0 && hostId === peerId) {
+      alert("Peer entered the lobby");
+    }
+  }, [lobbyPeers]);
+
+  const getActiveSharePeer = () => {
+    let activePeer = null;
+    for (const peer in peers) {
+      if (peers[peer].isScreenSharePaused === true) {
+        activePeer = peer;
+      }
+    }
+    return activePeer;
+  };
+
+  useEffect(() => {
+    getActiveMicPeer();
+    // console.log("acive peer id = " + activeMicPeer);
+  }, [peers, activeMicPeer]);
+
   return (
-    <div className="h-screen w-screen ">
+    <div className="h-full w-screen ">
       <div className="top-bar w-screen">
         <MeetNavbar name={props.name} roomId={props.roomId} />
       </div>
@@ -37,7 +73,7 @@ const Joined = (props) => {
                 <div
                   key={`peer-${key}`}
                   style={{ width: videoWidth }}
-                  className="space-between p-2 m-2 bg-base-200 h-fit rounded-lg mx-auto "
+                  className={`space-between p-2 m-2 ${activeMicPeer == key ? 'bg-primary' : `bg-base-200`} h-fit rounded-lg mx-auto `}
                 >
                   <PeerVideoAudioElem
                     key={`peerId-${key}`}
@@ -47,7 +83,7 @@ const Joined = (props) => {
               ))}
               <div
                 style={{ width: videoWidth }}
-                className="my-video p-2 m-2 bg-primary h-fit rounded-lg mx-auto"
+                className={`my-video p-2 m-2 ${activeMicPeer?.peerId == peerId ? 'bg-accent' : `bg-base-200`} h-fit rounded-lg mx-auto`}
               >
                 <MeVideoElem />
               </div>
