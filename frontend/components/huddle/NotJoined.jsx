@@ -14,7 +14,7 @@ const NotJoined = (props) => {
 console.log(hostId);
   const handleJoin = async () => {
     try {
-      await huddleClient.join(props.currentRoomId, {
+      await huddleClient.join(props.roomId, {
         address: props.ethAddress,
         wallet: "",
         ens: "axit.eth",
