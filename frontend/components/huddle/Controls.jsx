@@ -175,19 +175,17 @@ const Controls = (props) => {
         (recordingState.inProgress === true ? (
           <button
             className={btnStyles.btnInactive}
-            onClick={async () =>
-              await huddleClient.stopRecording({ ipfs: true })
-            }
+            onClick={async () => await huddleClient.stopRecording({ ipfs: true })}
           >
             <span>Stop Recording</span>
           </button>
         ) : (
           <button
             className={btnStyles.btnInactive}
-            onClick={async () =>
-                await huddleClient.startRecording({
-                  sourceUrl: window.location.href,
-                })
+            onClick={() =>
+              huddleClient.startRecording({
+                sourceUrl: window.location.href,
+              })
             }
           >
             <span>Start Recording</span>
