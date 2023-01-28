@@ -15,8 +15,9 @@ const Recordings = ({ recordings }) => {
             <th>Size</th>
           </tr>
         </thead>
+      </table>
         {recordings.map((recording, i) => {
-          console.log(recording);
+          console.log(typeof recording);
           <div> <Link href={recording.url}> Download now! </Link> with video of {recording.duration/1000}s and {recording.size} Mb </div>
           {/* <div key={i}>
             <tr>
@@ -27,7 +28,6 @@ const Recordings = ({ recordings }) => {
             </tr>
           </div>; */}
         })}
-      </table>
     </div>
   );
 };
