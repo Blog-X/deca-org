@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 
 const Recordings = ({ recordings }) => {
-  console.log(recordings)
   return (
     <div>
         <h1>Recordings</h1>
@@ -17,6 +16,7 @@ const Recordings = ({ recordings }) => {
           </tr>
         </thead>
         {recordings.map((recording, i) => {
+          console.log(recording);
           <div key={i}>
             <tr>
               <th>{i + 1}</th>
