@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 const Recordings = ({ recordings }) => {
+  console.log(recordings)
   return (
     <div>
         <h1>Recordings</h1>
