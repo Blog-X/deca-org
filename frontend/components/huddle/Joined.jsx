@@ -55,7 +55,7 @@ const Joined = (props) => {
           )}
           <br />
           <div className="controls">
-            <Controls />
+            <Controls ethAddress={props.ethAddress} />
           </div>
         </div>
         <div className="bg- w-1/4 mx-2 h-screen ">
