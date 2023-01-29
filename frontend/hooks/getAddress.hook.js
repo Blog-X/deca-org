@@ -12,3 +12,5 @@ const getethAddress = async () => {
     const address = await signer.getAddress();
     return address;
   };
+
+export {getethAddress};

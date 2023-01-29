@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Controls from "./Controls";
 import MeetNavbar from "./MeetNavbar";
 import MeVideoElem from "./MeVideoElem";
 import PeerVideoAudioElem from "./PeerVideoAudioElem";
 import { useHuddleStore } from "@huddle01/huddle01-client/store";
 import { huddleClient } from "@/constants/api.constants";
+import { getParticipants, updateParticipant } from "@/api/room.api";
 
 const Joined = (props) => {
   const peerId = useHuddleStore((state) => state.peerId);
@@ -12,11 +13,33 @@ const Joined = (props) => {
   const lobbyPeers = useHuddleStore((state) => state.lobbyPeers);
   const peers = useHuddleStore((state) => state.peers);
   const [activeMicPeer, setActiveMicPeer] = React.useState(null);
-  const isMicPaused = useHuddleStore(state => state.peers[peerId]?.isCamPaused);
+  const isMicPaused = useHuddleStore(
+    (state) => state.peers[peerId]?.isCamPaused
+  );
+    const [members, setMembers] = useState([]);
 
   const peerLeaveNotif = useHuddleStore((state) => state.peerLeaveNotif);
   // console.log(peerLeaveNotif);
   //   console.log(props);
+
+    // console.log(peers)
+  const updatePeer = async (peerId, peerName, roomId) => {
+    console.log("updatePeer");
+    console.log(peerId, peerName, roomId);
+    const resp = await updateParticipant(roomId, peerId, peerName);
+    console.log(resp);
+    // setPeerName(peerId, peerName);
+    return resp;
+  };
+
+  useEffect(() => {
+    const getMembers = async () => {
+      const response = await getParticipants(props.roomId);
+      setMembers(response.room);
+    };
+    getMembers();
+  }, [peers])
+
   const getFactor = (num) => {
     if (num == 0) return 1;
     if (num === 1) return 1.2;
@@ -29,7 +52,7 @@ const Joined = (props) => {
     (props.peersKeys.length + getFactor(props.peersKeys.length));
   // console.log(videoWidth);
 
-    const getActiveMicPeer = () => {
+  const getActiveMicPeer = () => {
     let activePeer = null;
     for (const peer in peers) {
       if (!peers[peer].isMicPaused) {
@@ -73,7 +96,9 @@ const Joined = (props) => {
                 <div
                   key={`peer-${key}`}
                   style={{ width: videoWidth }}
-                  className={`space-between p-2 m-2 ${activeMicPeer == key ? 'bg-primary' : `bg-base-200`} h-fit rounded-lg mx-auto `}
+                  className={`space-between p-2 m-2 ${
+                    activeMicPeer == key ? "bg-primary" : `bg-base-200`
+                  } h-fit rounded-lg mx-auto `}
                 >
                   <PeerVideoAudioElem
                     key={`peerId-${key}`}
@@ -83,7 +108,9 @@ const Joined = (props) => {
               ))}
               <div
                 style={{ width: videoWidth }}
-                className={`my-video p-2 m-2 ${activeMicPeer?.peerId == peerId ? 'bg-accent' : `bg-base-200`} h-fit rounded-lg mx-auto`}
+                className={`my-video p-2 m-2 ${
+                  activeMicPeer?.peerId == peerId ? "bg-accent" : `bg-base-200`
+                } h-fit rounded-lg mx-auto`}
               >
                 <MeVideoElem />
               </div>
@@ -91,7 +118,7 @@ const Joined = (props) => {
           )}
           <br />
           <div className="controls">
-            <Controls ethAddress={props.ethAddress} />
+            <Controls roomId={props.roomId} ethAddress={props.ethAddress} />
           </div>
         </div>
         <div className="bg- w-1/4 mx-2 h-screen ">
@@ -100,21 +127,30 @@ const Joined = (props) => {
               <h1 className="text-center text-white text-lg">Participants</h1>
               <div className="participants-list">
                 <ul>
-                  <li>
+                  {/* <li>
                     <span>1.</span>
                     <span className="p-1">{props.name}</span>
-                  </li>
+                  </li> */}
                   {/* {props.nameArr.map((key, i) => (
                     <li key={i}>
                       <span>{i + 2}.</span>
                       <span className="p-1">{key.name}</span>
                     </li>
                   ))} */}
-                  {props.peersKeys.map((key, i) => (
+                  {/* {props.peersKeys.map((key, i) => (
                     <div className="p-2" key={`peerId${i}`}>
                       <li key={i}>
                         <span>{i + 2}.</span>
                         <span className="p-1">{key}</span>
+                      </li>
+                    </div>
+                  ))} */}
+                  {members && members.map((member, i) => (
+                    <div className="p-2" key={`peerId${i}`}>
+                      <li key={i}>
+                        <span>{i + 1}.</span>
+                        <span className="p-1">{member.peerName}</span>
+                        <span className="p-1">{member.peerEthAddress.slice(0, 5)}...{member.peerEthAddress.slice(-2)}</span>
                       </li>
                     </div>
                   ))}
@@ -125,23 +161,35 @@ const Joined = (props) => {
           <hr />
           <div className="participants bg-base-300 max-h-1/3 overflow-y-auto">
             <div className="p-2 bg-base-200 rounded-lg mx-auto">
-              {peerId === hostId && <h1 className="text-center text-white text-lg">
-                Lobby Participants
-              </h1>}
+              {peerId === hostId && (
+                <h1 className="text-center text-white text-lg">
+                  Lobby Participants
+                </h1>
+              )}
               <br />
               <div className="lobby-list">
                 {peerId === hostId &&
                   lobbyPeers?.map((peer, i) => (
-                    <div className="flex flex-row justify-between"
-                    key={`${peerId}_${i}`}>
-                      <span className="p-1"> { i + 1 }. </span>
+                    <div
+                      className="flex flex-row justify-between"
+                      key={`${peerId}_${i}`}
+                    >
+                      <span className="p-1"> {i + 1}. </span>
                       <span className="p-2">{peer.peerId}</span>
-                      
+
                       <button
                         className="btn btn-success btn-xs	"
-                        onClick={async () =>
-                          await huddleClient.allowLobbyPeerToJoinRoom(peer.peerId)
-                        }
+                        onClick={async () => {
+                          await huddleClient.allowLobbyPeerToJoinRoom(
+                            peer.peerId
+                          );
+                          // const update = await updatePeer(
+                          //   peer.peerId,
+                          //   props.name,
+                          //   props.roomId
+                          // );
+                          // console.log(update);
+                        }}
                       >
                         Accept
                       </button>

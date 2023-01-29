@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const roomSchema = new mongoose.Schema({
-    name: {
+    roomId: {
         type: String,
         required: false,
     }, 
@@ -9,7 +9,7 @@ const roomSchema = new mongoose.Schema({
         {
             peerId: {
                 type: String,
-                required: true
+                required: false
             },
             peerName: {
                 type: String,
@@ -24,7 +24,7 @@ const roomSchema = new mongoose.Schema({
 
 }, {
     timestamps: true,
-    collection: 'users'
+    collection: 'rooms'
 });
 
 export default mongoose.model('Room', roomSchema);
