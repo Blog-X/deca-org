@@ -11,7 +11,7 @@ import { useHuddleStore } from "@huddle01/huddle01-client/store";
 
 const NotJoined = (props) => {
   const hostId = useHuddleStore((state) => state.hostId);
-console.log(hostId);
+// console.log(hostId);
   const handleJoin = async () => {
     try {
       await huddleClient.join(props.roomId, {
@@ -19,14 +19,15 @@ console.log(hostId);
         wallet: "",
         ens: "axit.eth",
       });
-      props.setNameArr([
-        ...props.nameArr,
-        {
-          name: props.name,
-          address: props.ethAddress,
-          id: props.peerId,
-        },
-      ]);
+      // props.setNameArr([
+      //   ...props.nameArr,
+      //   {
+      //     name: props.name,
+      //     address: props.ethAddress,
+      //     id: props.peerId,
+      //   },
+      // ]);
+      
       alert("You have entered the lobby! Please wait for the host to accept you in the meeting.");
       console.log("lobby entry");
       //   window.location.reload()
