@@ -4,6 +4,7 @@ import 'dotenv/config';
 import cors from 'cors';
 
 import authRoutes from './routes/auth.routes.js'
+import apiRoutes from './api.routes.js'
 
 const app = express();
 const port = process.env.PORT;
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/api', apiRoutes);
 
 app.listen(port, () => {
   console.log(`server started on http://localhost:${port}`);
