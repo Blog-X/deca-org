@@ -22,5 +22,5 @@ app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 
 app.listen(port, () => {
-  console.log(`server started on http://localhost:${port}`);
+  console.log(`server started on port:${port}`);
 });
