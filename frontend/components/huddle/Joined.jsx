@@ -9,6 +9,8 @@ import { getParticipants, updateParticipant } from "@/api/room.api";
 import { getethAddress } from "@/hooks/getAddress.hook";
 import ChatComp from "../Chat/ChatComp";
 import Chat from "./Chat";
+import GrpChat from "./GrpCHat";
+import IndividualChat from "./IndividualChat";
 
 const Joined = (props) => {
   const peerId = useHuddleStore((state) => state.peerId);
@@ -23,12 +25,14 @@ const Joined = (props) => {
   const [members, setMembers] = useState([]);
 
   const [hidden, setHidden] = useState(true);
+  const [hiddenGrpChats, setHiddenGrpChats] = useState(true);
   // console.log(lobbyPeers);
   const [myEthAddress, setMyEthAddress] = useState("");
   const [receiverEthAddress, setReceiverEthAddress] = useState("");
   const [receiverName, setReceiverName] = useState(
     "0x0d75194C804C26912F233A0072A4816DDdcf3173"
   );
+  const [receiverPeerId, setReceiverPeerId] = useState("");
 
   const updatePeer = async (peerId, peerName, roomId) => {
     console.log("updatePeer");
@@ -113,7 +117,7 @@ const Joined = (props) => {
       <div className="top-bar w-screen">
         <MeetNavbar name={props.name} roomId={props.roomId} />
       </div>
-      <div className="flex h-screen w-screen overflow-x-hidden">
+      <div className="flex h-full w-screen overflow-x-hidden">
         <div className="video-rendering basis-3/4 bg-base-300 h-full overflow-y-auto">
           {props.peersKeys.length >= 0 && (
             <div className="flex flex-row flex-wrap max-h-3/4 overflow-y-auto">
@@ -201,15 +205,12 @@ const Joined = (props) => {
                             onClick={() => {
                               setReceiverEthAddress(member.peerEthAddress);
                               setReceiverName(member.peerName);
+                              setReceiverPeerId(member.peerId);
                               setHidden(!hidden);
                             }}
                             className="p-1"
                           >
-                            {hidden ? (
-                              <button className="btn-info btn">Chat</button>
-                            ) : (
-                              <button className="btn-warning btn">Close</button>
-                            )}
+                            {member.peerId != peerId && <button className="btn-info btn">Chat</button>}
                           </td>
                         </tr>
                       ))}
@@ -271,22 +272,33 @@ const Joined = (props) => {
           <hr />
           <div className="participants bg-base-300 max-h-1/3 overflow-y-auto">
             <div className="p-2 bg-base-200 rounded-lg mx-auto">
-              <h1 className="text-center text-white text-lg">Push Chat</h1>
-              {props.peersKeys.map((key, i) => {
+              <h1 className="text-center text-white text-lg">Chats</h1>
+              {/* {props.peersKeys.map((key, i) => {
                 return (
                   <div key={i}>
                     <Chat roomId={props.roomId} fromPeerId={key} />;
                   </div>
                 );
-              })}
+              })} */}
               {/* <Chat roomId={props.roomId} /> */}
               <div className={hidden ? "hidden" : "flex"}>
-                <ChatComp
+                {/* <ChatComp
                   sender={myEthAddress}
                   receiver={receiverEthAddress}
                   name={receiverName}
-                />
+                /> */}
+                <IndividualChat otherPeerId={receiverPeerId} />
               </div>
+              <div className="w-full flex justify-center p-4">
+                <button onClick={() => setHiddenGrpChats(!hiddenGrpChats)} className="btn btn-accent relative w-3/4 text-md">
+                  Group chats
+                </button>
+              </div>
+              { !hiddenGrpChats && 
+                <div>
+                  <GrpChat />
+                </div>
+              }
             </div>
           </div>
         </div>

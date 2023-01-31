@@ -17,9 +17,8 @@ const addParticipant = async (req, res) => {
       const peers = room.peers;
       for (let i = 0; i < peers.length; i++) {
         if (peers[i].peerEthAddress === peerEthAddress) {
-          return res.status(200).json({
-            message: "Peer already exists in room",
-          });
+          peers.splice(i, 1);
+          break;
         }
       }
       peers.push(newPeer);
