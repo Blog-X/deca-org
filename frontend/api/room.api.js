@@ -10,12 +10,12 @@ const addParticipant = async (roomId, peerId, peerName, peerEthAddress) => {
   return data;
 };
 
-const updateParticipant = async (roomId, peerId, peerEthAddress) => {
-    console.log(roomId, peerId, peerEthAddress);
+const updateParticipant = async (roomId, peerId, peerName) => {
+    console.log(roomId, peerId, peerName);
   const { data } = await AxiosJsInstance.post("api/room/updatePeerId", {
     roomId,
     peerId,
-    peerEthAddress,
+    peerName,
   });
   return data;
 };

@@ -11,23 +11,16 @@ import { addParticipant } from "@/api/room.api";
 
 const NotJoined = (props) => {
   const hostId = useHuddleStore((state) => state.hostId);
-  console.log(props);
+  const setMe = useHuddleStore(state => state.setMe);
+  
   const handleJoin = async () => {
     try {
+      setMe('displayName', props.name)
       await huddleClient.join(props.roomId, {
         address: props.ethAddress,
         wallet: "",
         ens: "axit.eth",
       });
-      // props.setNameArr([
-      //   ...props.nameArr,
-      //   {
-      //     name: props.name,
-      //     address: props.ethAddress,
-      //     id: props.peerId,
-      //   },
-      // ]);\
-
       const response = await addParticipant(
         props.roomId,
         props.peerId,

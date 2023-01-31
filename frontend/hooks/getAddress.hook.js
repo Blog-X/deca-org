@@ -1,7 +1,5 @@
 import { ethers } from "ethers";
 
-
-
 const getethAddress = async () => {
     if (!window.ethereum)
       throw new Error("No crypto wallet found. Please install it.");

@@ -6,23 +6,30 @@ import PeerVideoAudioElem from "./PeerVideoAudioElem";
 import { useHuddleStore } from "@huddle01/huddle01-client/store";
 import { huddleClient } from "@/constants/api.constants";
 import { getParticipants, updateParticipant } from "@/api/room.api";
+import { getethAddress } from "@/hooks/getAddress.hook";
+import ChatComp from "../Chat/ChatComp";
+import Chat from "./Chat";
 
 const Joined = (props) => {
   const peerId = useHuddleStore((state) => state.peerId);
   const hostId = useHuddleStore((state) => state.hostId);
   const lobbyPeers = useHuddleStore((state) => state.lobbyPeers);
   const peers = useHuddleStore((state) => state.peers);
+  const activeSpeakerPeerId = useHuddleStore((state) => state.activeSpeaker);
   const [activeMicPeer, setActiveMicPeer] = React.useState(null);
   const isMicPaused = useHuddleStore(
     (state) => state.peers[peerId]?.isCamPaused
   );
-    const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState([]);
 
-  const peerLeaveNotif = useHuddleStore((state) => state.peerLeaveNotif);
-  // console.log(peerLeaveNotif);
-  //   console.log(props);
+  const [hidden, setHidden] = useState(true);
+  // console.log(lobbyPeers);
+  const [myEthAddress, setMyEthAddress] = useState("");
+  const [receiverEthAddress, setReceiverEthAddress] = useState("");
+  const [receiverName, setReceiverName] = useState(
+    "0x0d75194C804C26912F233A0072A4816DDdcf3173"
+  );
 
-    // console.log(peers)
   const updatePeer = async (peerId, peerName, roomId) => {
     console.log("updatePeer");
     console.log(peerId, peerName, roomId);
@@ -33,12 +40,30 @@ const Joined = (props) => {
   };
 
   useEffect(() => {
+    const updateHost = async () => {
+      if (peerId === hostId) {
+        const response = await updatePeer(hostId, props.name, props.roomId);
+        console.log(response);
+      }
+    };
+    updateHost();
+  }, []);
+
+  useEffect(() => {
     const getMembers = async () => {
       const response = await getParticipants(props.roomId);
       setMembers(response.room);
     };
     getMembers();
-  }, [peers])
+  }, [peers]);
+
+  useEffect(() => {
+    const getAddress = async () => {
+      const ethAddress = await getethAddress();
+      setMyEthAddress(ethAddress);
+    };
+    getAddress();
+  }, []);
 
   const getFactor = (num) => {
     if (num == 0) return 1;
@@ -97,7 +122,11 @@ const Joined = (props) => {
                   key={`peer-${key}`}
                   style={{ width: videoWidth }}
                   className={`space-between p-2 m-2 ${
-                    activeMicPeer == key ? "bg-primary" : `bg-base-200`
+                    activeMicPeer == key
+                      ? activeSpeakerPeerId === key
+                        ? "bg-warning"
+                        : "bg-primary"
+                      : `bg-base-200`
                   } h-fit rounded-lg mx-auto `}
                 >
                   <PeerVideoAudioElem
@@ -145,24 +174,55 @@ const Joined = (props) => {
                       </li>
                     </div>
                   ))} */}
-                  {members && members.map((member, i) => (
-                    <div className="p-2" key={`peerId${i}`}>
-                      <li key={i}>
-                        <span>{i + 1}.</span>
-                        <span className="p-1">{member.peerName}</span>
-                        <span className="p-1">{member.peerEthAddress.slice(0, 5)}...{member.peerEthAddress.slice(-2)}</span>
-                      </li>
-                    </div>
-                  ))}
+                  <br />
+                  <table className="table w-full">
+                    <thead>
+                      <tr>
+                        {/* <th>Sr. no.</th> */}
+                        <th>Name</th>
+                        <th>Eth Address</th>
+                        <th>PeerId</th>
+                      </tr>
+                    </thead>
+                    {members &&
+                      members.map((member, i) => (
+                        <tr
+                          className={i % 2 === 0 ? "active" : "p-4"}
+                          key={`peerId${i}`}
+                        >
+                          {/* <td>{i + 1}.</td> */}
+                          <td className="p-1">{member.peerName}</td>
+                          <td className="p-1">
+                            {member.peerEthAddress.slice(0, 5)}...
+                            {member.peerEthAddress.slice(-2)}
+                          </td>
+                          <td>{member.peerId}</td>
+                          <td
+                            onClick={() => {
+                              setReceiverEthAddress(member.peerEthAddress);
+                              setReceiverName(member.peerName);
+                              setHidden(!hidden);
+                            }}
+                            className="p-1"
+                          >
+                            {hidden ? (
+                              <button className="btn-info btn">Chat</button>
+                            ) : (
+                              <button className="btn-warning btn">Close</button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                  </table>
                 </ul>
               </div>
             </div>
           </div>
-          <hr />
           <div className="participants bg-base-300 max-h-1/3 overflow-y-auto">
             <div className="p-2 bg-base-200 rounded-lg mx-auto">
               {peerId === hostId && (
                 <h1 className="text-center text-white text-lg">
+                  <hr />
                   Lobby Participants
                 </h1>
               )}
@@ -183,12 +243,12 @@ const Joined = (props) => {
                           await huddleClient.allowLobbyPeerToJoinRoom(
                             peer.peerId
                           );
-                          // const update = await updatePeer(
-                          //   peer.peerId,
-                          //   props.name,
-                          //   props.roomId
-                          // );
-                          // console.log(update);
+                          const update = await updatePeer(
+                            peer.peerId,
+                            peer.displayName,
+                            props.roomId
+                          );
+                          console.log(update);
                         }}
                       >
                         Accept
@@ -212,7 +272,21 @@ const Joined = (props) => {
           <div className="participants bg-base-300 max-h-1/3 overflow-y-auto">
             <div className="p-2 bg-base-200 rounded-lg mx-auto">
               <h1 className="text-center text-white text-lg">Push Chat</h1>
-              <div className="chats-list"></div>
+              {props.peersKeys.map((key, i) => {
+                return (
+                  <div key={i}>
+                    <Chat roomId={props.roomId} fromPeerId={key} />;
+                  </div>
+                );
+              })}
+              {/* <Chat roomId={props.roomId} /> */}
+              <div className={hidden ? "hidden" : "flex"}>
+                <ChatComp
+                  sender={myEthAddress}
+                  receiver={receiverEthAddress}
+                  name={receiverName}
+                />
+              </div>
             </div>
           </div>
         </div>
