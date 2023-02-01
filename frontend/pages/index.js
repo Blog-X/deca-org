@@ -25,7 +25,7 @@ export default function Home() {
             {APP_SUBTITLE}
           </div>
         </div>
-        <div className="splash-screen-content relative p-2 md:h-2/3 w-3/4 m-auto sm:w-1/4 top-10 left-0 bg-gradient-to-r from-[#00101c] to-blue-500 rounded-2xl z-0 md:top-20 mt-12 order-1 md:order-2">
+        <div className="splash-screen-content min-h-fit relative p-2 md:h-2/3 w-3/4 m-auto sm:w-1/4 top-10 left-0 bg-gradient-to-r from-[#00101c] to-blue-500 rounded-2xl z-0 md:top-20 mt-12 order-1 md:order-2">
           <div className="splash-screen-content-inner relative h-full w-full z-10 flex flex-col justify-between">
             <div>
               <Image
