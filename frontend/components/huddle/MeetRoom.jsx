@@ -7,6 +7,7 @@ import MeVideoElem from "./MeVideoElem";
 import NotJoined from "./NotJoined";
 import Joined from "./Joined";
 import ShareScreen from "./ShareScreen";
+import Recordings from "./Recordings";
 
 const MeetRoom = (props) => {
   const peersKeys = useHuddleStore((state) => Object.keys(state.peers));
@@ -24,6 +25,8 @@ const MeetRoom = (props) => {
   const [hostName, setHostName] = useState("");
 
   // console.log(props);
+  
+
   useEffect(() => {
     const setPeerName = (peerId) => {
       let peerName = "";
@@ -85,6 +88,7 @@ const MeetRoom = (props) => {
             roomId={props.currentRoomId}
             peersKeys={peersKeys}
             nameArr={nameArr}
+            ethAddress={props.ethAddress}
           />
           {peersKeys.map((key) => (
             <div
@@ -97,6 +101,11 @@ const MeetRoom = (props) => {
               <ShareScreen key={`peerId-${key}`} peerId={key} />
             </div>
           ))}
+          {peerId === hostId && (
+            <div className="mx-auto">
+              <Recordings recordings={recordings} />
+            </div>
+          )}
         </div>
       )}
     </div>

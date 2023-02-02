@@ -63,7 +63,7 @@ export default function FileDecrypt(){
       <button onClick={()=>decrypt()}>decrypt</button>
       {
         fileURL?
-          <a href={fileURL} target="_blank">viewFile</a>
+          <a href={fileURL} >viewFile</a>
         :
           null
       }

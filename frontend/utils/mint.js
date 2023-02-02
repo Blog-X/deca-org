@@ -1,7 +1,7 @@
 import { videonft } from "@livepeer/video-nft";
 
 const apiOpts = {
-    auth: { apiKey: '363b44cf-980b-429f-91e0-cc6aefaa3d02'},
+    auth: { apiKey: 'b8793269-4a3b-4da1-a424-097f2c64f7d5'},
     endpoint: videonft.api.prodApiEndpoint,
 }
 

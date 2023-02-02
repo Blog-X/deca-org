@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { huddleClient } from "@/constants/api.constants";
 import { useHuddleStore } from "@huddle01/huddle01-client/store";
 import Image from "next/image";
+import { getethAddress } from "@/hooks/getAddress.hook";
+import { removeParticipant } from "@/api/room.api";
 
 const Controls = (props) => {
   const btnStyles = {
@@ -43,6 +45,8 @@ const Controls = (props) => {
     }
     return activePeer;
   };
+
+  const [lobbypeer, setLobbyPeer] = useState("");
 
   return (
     <div className="w-fit flex flex-row mx-auto justify-apart">
@@ -120,7 +124,9 @@ const Controls = (props) => {
 
       <button
         className={btnStyles.btnInactive}
-        onClick={() => {
+        onClick={async () => {
+          const ethAddress = await getethAddress()
+          const resp = await removeParticipant(props.roomId, ethAddress)
           huddleClient.close();
           window.location.reload();
         }}

@@ -3,11 +3,12 @@ import { ethers } from "ethers";
 import ErrorMessage from "../components/authentication/ErrorMessage";
 import SuccessMessage from "../components/authentication/SuccessMessage";
 import Web3 from "web3";
+import LoginOptions from "@/components/authentication/LoginOptions";
 
 
 const verifyMessage = async ({ message, address, signature }) => {
     try {
-      const signerAddr = await ethers.utils.verifyMessage(message, signature);
+      const signerAddr = ethers.utils.verifyMessage(message, signature);
       if (signerAddr !== address) {
         return false;
       }
@@ -95,11 +96,12 @@ const verifyMessage = async ({ message, address, signature }) => {
   
   
     return (
-      
+      <div>
+
       <form className="m-4" onSubmit={handleVerification}>
-        <div className="credit-card w-full shadow-lg mx-auto rounded-xl bg-white">
+        <div className="credit-card w-full shadow-lg mx-auto rounded-xl bg-base-200">
           <main className="mt-4 p-4">
-            <h1 className="text-xl font-semibold text-gray-700 text-center">
+            <h1 className="text-xl font-semibold text-white text-center">
               Verify signature
             </h1>
             <div className="">
@@ -140,6 +142,8 @@ const verifyMessage = async ({ message, address, signature }) => {
           </div>
         </div>
       </form>
+          <LoginOptions />
+      </div>
     );
   }
   
