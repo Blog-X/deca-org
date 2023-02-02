@@ -29,7 +29,7 @@ const getWalletDetails = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const address = await signer.getAddress();
-  return { address, signer };
+  return { address, signer, provider };
 };
 
 export { getethAddress, getSigner, getWalletDetails };
