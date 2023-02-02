@@ -8,7 +8,7 @@ import LoginOptions from "@/components/authentication/LoginOptions";
 
 const verifyMessage = async ({ message, address, signature }) => {
     try {
-      const signerAddr = await ethers.utils.verifyMessage(message, signature);
+      const signerAddr = ethers.utils.verifyMessage(message, signature);
       if (signerAddr !== address) {
         return false;
       }

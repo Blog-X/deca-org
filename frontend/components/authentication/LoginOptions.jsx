@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "../styleComps/Modal";
+import Link from "next/link";
 
 function LoginOptions() {
   return (
@@ -9,10 +10,15 @@ function LoginOptions() {
           <div className="card-body">
             <h2 className="card-title">Create an organization!</h2>
             <p>
-              "Some random description" Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, quas?
+              "Some random description" Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Expedita, quas?
             </p>
             <div className="card-actions justify-end">
-              <Modal title={'Create an organization!'} clickText={'Create now!'} type={'create'}/>
+              <Modal
+                title={"Create an organization!"}
+                clickText={"Create now!"}
+                type={"create"}
+              />
             </div>
           </div>
         </div>
@@ -22,10 +28,15 @@ function LoginOptions() {
           <div className="card-body">
             <h2 className="card-title">Join an Organization!</h2>
             <p>
-              "Some random description" Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, quas?
+              "Some random description" Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Expedita, quas?
             </p>
             <div className="card-actions justify-end">
-              <Modal title={'Join an Organization!'} clickText={'Join now!'} type={'join'}/>
+              <Modal
+                title={"Join an Organization!"}
+                clickText={"Join now!"}
+                type={"join"}
+              />
             </div>
           </div>
         </div>
@@ -35,10 +46,15 @@ function LoginOptions() {
           <div className="card-body">
             <h2 className="card-title">Join as a guest!</h2>
             <p>
-              "Some random description" Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, quas?
+              "Some random description" Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Expedita, quas?
             </p>
             <div className="card-actions justify-end">
-                <button className="btn btn-primary">Proceed</button>
+              <Modal
+                title={"Create a meeting!"}
+                clickText={"Generate meeting!"}
+                type={"meet"}
+              />
             </div>
           </div>
         </div>

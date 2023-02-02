@@ -1,10 +1,16 @@
 import React from "react";
+import { deployContract } from "@/hooks/SmartContractFunc";
+import { coolGray } from "tailwindcss/colors";
+import Loading from "./Loading";
+import Router from "next/router";
 
 export default function Modal(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [orgName, setOrgName] = React.useState("");
   const [joinId, setJoinId] = React.useState("");
   const [name, setName] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   return (
     <>
       <button
@@ -66,11 +72,17 @@ export default function Modal(props) {
                         />
                       </div>
                     ) : (
-                      "Join as a guest"
+                      <input
+                          type="text"
+                          placeholder="Enter your wallet address (it will be used as a unique meeting ID)"
+                          onChange={(e) => setJoinId(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
                     )}
                   </p>
                 </div>
                 {/*footer*/}
+                {isLoading && <Loading />}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -82,7 +94,27 @@ export default function Modal(props) {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={async () => {
+                      try {
+                        if (props.type === "create") {
+                          console.log(name);
+                          setIsLoading(true);
+                          const address = await deployContract(orgName, name);
+                          if(address)
+                            setIsLoading(false);
+                          Router.push(`/org/${orgName}`);
+                          console.log(address.address);
+                        } else if (props.type === "meet") {
+                          Router.push(`/meeting/${joinId}`);
+                        } else {
+
+                        }
+                        setShowModal(false);
+                      } catch (err) {
+                        setIsLoading(false);
+                        console.log(err);
+                      }
+                    }}
                   >
                     Save Changes
                   </button>

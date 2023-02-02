@@ -5,9 +5,14 @@ const orgSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  orgEthAddress: {
+  orgAddress: {
     type: String,
     required: true,
+    default: "",
+  },
+  hostAddress: {
+    type: String,
+    required: false,
     default: "",
   },
   teams: [Object],
