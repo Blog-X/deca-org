@@ -10,7 +10,6 @@ const IndividualChat = ({ otherPeerId }) => {
   const [message, setMessage] = React.useState("");
   const setChat = useHuddleStore((state) => state.setChat);
 
-    console.log(peerRoomChats);
   const makeMessage = async (message, id) => {
     console.log(message, id, myPeerId)
     await huddleClient.sendDM(message, id, myPeerId);
