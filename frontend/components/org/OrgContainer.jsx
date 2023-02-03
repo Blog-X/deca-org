@@ -56,34 +56,41 @@ const OrgContainer = ({ orgName, address }) => {
               </div>
             </div>
           </div>
-          <div className="my-5 py-2 w-full flex flex-col ">
-            
-            <div className="flex justify-apart w-full">
-              {org?.hostAddress == myAddress && (
-                <div className="host-controls mx-auto">
-                  <button className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg">Add a member</button>
-                </div>
-              )}
-              <button 
-              className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg ml-8 mr-8"
-              onClick={() => {
-                router.push("/stream/" + orgName);
-              }}
+          <div className="my-5 py-2 w-full flex flex-row flex-wrap  ">
+            {/* <div className="flex flex-row w-full"> */}
+            {org?.hostAddress == myAddress && (
+              <div className="host-controls ">
+              <Link href={'/sbt'}>
+                <button className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3">
+                  Add a member
+                </button>
+              </Link>
+              </div>
+            )}
+            <div className="host-controls ">
+              <button
+                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3"
+                onClick={() => {
+                  router.push("/stream/" + orgName);
+                }}
               >
-              
-              Start A LiveStream
+                Start A LiveStream
               </button>
-              <button 
-              className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg  mr-8"
-              onClick={() => {
-                router.push("/upload/" + orgName);
-              }}
+            </div>
+            <div className="host-controls ">
+              <button
+                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3"
+                onClick={() => {
+                  router.push("/upload/" + orgName);
+                }}
               >
                 Upload Video Asset
               </button>
-
+            </div>
+            {/* <hr /> */}
+            <div className="host-controls ">
               <button
-                className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3"
                 onClick={() => {
                   setMeetLink("/meeting/" + orgName);
                   console.log(meetLink);
@@ -91,22 +98,24 @@ const OrgContainer = ({ orgName, address }) => {
               >
                 Generate a meeting link
               </button>
-              {meetLink && (
-                <Link className="mx-auto m-2 link link-accent" href={meetLink}>
-                  {" "}
-                  Start a meeting!{" "}
-                </Link>
-              )}
+            </div>
+            {meetLink && (
+              <Link className=" m-2 link link-accent" href={meetLink}>
+                {" "}
+                Start a meeting!{" "}
+              </Link>
+            )}
+            <div className="host-controls ">
               <button
-                className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg ml-8"
+                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3 ml-8"
                 onClick={() => {
                   router.push("/mint/" + orgName);
                 }}
-                
               >
                 Mint Your Video NFT
               </button>
             </div>
+            {/* </div> */}
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>
           <Team team={team} />

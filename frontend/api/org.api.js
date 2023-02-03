@@ -33,4 +33,21 @@ const getOrganization = async (orgName) => {
   }
 };
 
-export { addOrganization, getOrganization };
+const addMember = async (orgName, memberName, memberAddress) => {
+  try {
+    const response = await AxiosJsInstance.post("api/org/addMember", {
+      orgName: orgName,
+      memberName: memberName,
+      memberAddress: memberAddress,
+    });
+    if (response.status === 200) {
+      alert("Member added successfully");
+    } else {
+      alert("Failed to add member");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { addOrganization, getOrganization, addMember };
