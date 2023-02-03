@@ -11,6 +11,7 @@ import ChatComp from "../Chat/ChatComp";
 import Chat from "./Chat";
 import GrpChat from "./GrpCHat";
 import IndividualChat from "./IndividualChat";
+import Transcript from "./Transcript";
 
 const Joined = (props) => {
   const peerId = useHuddleStore((state) => state.peerId);
@@ -152,6 +153,9 @@ const Joined = (props) => {
           <br />
           <div className="controls">
             <Controls roomId={props.roomId} ethAddress={props.ethAddress} />
+          </div>
+          <div className="transcript">
+            <Transcript />
           </div>
         </div>
         <div className="bg- w-1/4 mx-2 h-screen ">
