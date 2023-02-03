@@ -3,7 +3,7 @@ import MeetRoom from "@/components/huddle/MeetRoom";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import { useEffect, useState} from "react";
-
+import 'regenerator-runtime/runtime';
 
 
 import React from "react";
