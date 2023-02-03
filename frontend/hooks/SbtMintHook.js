@@ -31,24 +31,18 @@ export const mintSBT = async (tokenUrl, address) => {
 
 export const checkSbtBalance = async () => {
   try {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    const SBTContract = new ethers.Contract(
+    let sbt = {
+      abi: contract,
+    };
+    const { address, signer } = await getWalletDetails();
+    const contractInstance = new ethers.Contract(
       "0x9144Bee2672448b83820d82ef21281380e95d696",
-      contract,
+      sbt.abi,
       signer
     );
-    const web3 = new Web3('https://api.hyperspace.node.glif.io/rpc/v1');
-    const contract1 = new web3.eth.Contract(contract, "0x9144Bee2672448b83820d82ef21281380e95d696")
-    console.log(SBTContract);
-    let balance = await SBTContract.balanceOf(address);
-    // console.log(address);
-    // let balance = contract1.methods.balanceOf('0xb17bc8c23e53f463F0332008D518121B74b260d2');
+    const userAddress = await signer.getAddress();
+    const balance = await contractInstance.balanceOf(userAddress);
     console.log("balance", Number(balance));
-    return {balance, address};
   } catch (error) {
     console.log(error);
   }
