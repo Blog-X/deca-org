@@ -11,10 +11,12 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
   }
 
   return (
+    <div className="flex h-screen justify-center items-center">
     <form onSubmit={(e) => handleSubmit(e)}>
-      <div className="flex-column">
+      <div className="flex-column p-2" >
         <label>NFT Title</label>
         <input
+          className="m-2 textarea textarea-info"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           type="text"
@@ -23,8 +25,9 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
         />
       </div>
       <div className="flex-column">
-        <label>Description</label>
+        <label className="align-top">Description</label>
         <textarea
+          className="m-2 textarea textarea-info"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           type="text"
@@ -34,8 +37,9 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
           required
         />
       </div>
-      <button type="submit">Choose Video and Mint</button>
+      <button type="submit" className="file-input file-input-bordered file-input-primary w-full max-w-xs m-10">Choose Video and Mint</button>
     </form>
+    </div>
   );
 };
 

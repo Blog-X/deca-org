@@ -60,11 +60,19 @@ export default function UploadVideoAsset(){
   );
  
   return (
-    <div>
+    
+  
+
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content text-center">
+        
+    
+  
       {!asset && (
-        <div {...getRootProps()}>
+        <div className='flex-initial w-64  border-solid border-2 border-indigo-500/50' {...getRootProps()}>
           <input {...getInputProps()} />
           <p>Drag and drop or browse files</p>
+          
  
           {error?.message && <p>{error.message}</p>}
         </div>
@@ -93,6 +101,7 @@ export default function UploadVideoAsset(){
             Upload
           </button>
         )}
+      </div>
       </div>
     </div>
   );
