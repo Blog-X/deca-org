@@ -2,7 +2,7 @@ import orgs from "../models/org.model.js";
 
 const addOrg = async (req, res) => {
   const { orgName, orgAddress, hostAddress, hostName } = req.body;
-    console.log(req.body);
+  console.log(req.body);
   try {
     const org = await orgs.findOne({
       orgName: orgName,
@@ -65,4 +65,41 @@ const getOrg = async (req, res) => {
   }
 };
 
-export { addOrg, getOrg };
+const addMember = async (req, res) => {
+  const { orgName, memberEthAddress, memberName } = req.body;
+  try {
+    const org = await orgs.findOne({
+      orgName: orgName,
+    });
+    if (org) {
+      const member = {
+        memberEthAddress,
+        memberName,
+      };
+      let newMembers = org.members;
+      newMembers.push(member);
+      const addMember = await org.findOneAndUpdate(
+        {
+          orgName: orgName,
+        },
+        {
+          members: newMembers,
+        }
+      );
+      if (addMember) {
+        res
+          .status(200)
+          .json({ member: member, message: "Member successfully added" });
+      } else {
+        res.status(400).json({ error: "Process failed" });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "Couldn't update organization at this stage. Please try again" });
+  }
+};
+
+export { addOrg, getOrg, addMember };

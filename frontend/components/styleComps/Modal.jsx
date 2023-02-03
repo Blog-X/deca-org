@@ -1,8 +1,10 @@
 import React from "react";
 import { deployContract } from "@/hooks/SmartContractFunc";
-import { coolGray } from "tailwindcss/colors";
 import Loading from "./Loading";
 import Router from "next/router";
+import { APP_DOMAIN } from "@/constants/app.constants";
+import { checkSbtBalance } from "@/hooks/SbtMintHook";
+import { addMember } from "@/api/org.api";
 
 export default function Modal(props) {
   const [showModal, setShowModal] = React.useState(false);
@@ -66,18 +68,18 @@ export default function Modal(props) {
                         />
                         <input
                           type="text"
-                          placeholder="Organization Access ID/Token"
+                          placeholder="Organization name"
                           onChange={(e) => setJoinId(e.target.value)}
                           className="input input-bordered input-primary w-full max-w-xs m-2"
                         />
                       </div>
                     ) : (
                       <input
-                          type="text"
-                          placeholder="Enter your wallet address (it will be used as a unique meeting ID)"
-                          onChange={(e) => setJoinId(e.target.value)}
-                          className="input input-bordered input-primary w-full max-w-xs m-2"
-                        />
+                        type="text"
+                        placeholder="Enter your wallet address (it will be used as a unique meeting ID)"
+                        onChange={(e) => setJoinId(e.target.value)}
+                        className="input input-bordered input-primary w-full max-w-xs m-2"
+                      />
                     )}
                   </p>
                 </div>
@@ -100,14 +102,25 @@ export default function Modal(props) {
                           console.log(name);
                           setIsLoading(true);
                           const address = await deployContract(orgName, name);
-                          if(address)
-                            setIsLoading(false);
+                          if (address) setIsLoading(false);
+                          localStorage.setItem(
+                            "orgLink",
+                            APP_DOMAIN + `/org/${orgName}`
+                          );
                           Router.push(`/org/${orgName}`);
                           console.log(address.address);
                         } else if (props.type === "meet") {
                           Router.push(`/meeting/${joinId}`);
                         } else {
-
+                          const {balance, address} = await checkSbtBalance();
+                          if (balance >= 1) {
+                            const memberAdd = addMember(joinId, name, address);
+                            localStorage.setItem(
+                              "orgLink",
+                              APP_DOMAIN + `/org/${joinId}`
+                            );
+                            Router.push(`/org/${joinId}`);
+                          }
                         }
                         setShowModal(false);
                       } catch (err) {
