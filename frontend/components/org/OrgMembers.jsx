@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getethAddress } from "@/hooks/getAddress.hook";
 import ChatComp from "@/components/Chat/ChatComp";
 
-const OrgMembers = ({members}) => {
+const OrgMembers = ({ members }) => {
   const [hidden, setHidden] = useState(true);
   const [hiddenGrpChats, setHiddenGrpChats] = useState(true);
   // console.log(lobbyPeers);
@@ -28,7 +28,7 @@ const OrgMembers = ({members}) => {
   }, []);
 
 
- 
+
 
   return (
     <div>
@@ -50,23 +50,23 @@ const OrgMembers = ({members}) => {
                 return (
                   <tr key={index} className={index % 2 === 0 ? `active` : ""}>
                     <th>{index + 1}</th>
-                    <td>{member.name}</td>
-                    <td>{member.address}</td>
+                    <td>{member.memberName}</td>
+                    <td>{member.memberEthAddress}</td>
                     <td>{member.team}</td>
-                    <td 
-                    onClick={() => {
-                      setReceiverEthAddress(member.peerEthAddress);
-                      setReceiverName(member.peerName);
-                      setReceiverPeerId(member.peerId);
-                      setHidden(!hidden);
-                    }}>
+                    <td
+                      onClick={() => {
+                        setReceiverEthAddress(member.peerEthAddress);
+                        setReceiverName(member.peerName);
+                        setReceiverPeerId(member.peerId);
+                        setHidden(!hidden);
+                      }}>
                       <div >
-                <ChatComp
-                  sender= {myEthAddress}
-                  receiver='0x0d75194C804C26912F233A0072A4816DDdcf3173' //receiverEthAddress change this at later stage
-                  name='Rohan' // change this at later stage
-                />
-              </div>Chat</td>
+                        <ChatComp
+                          sender={myEthAddress}
+                          receiver='0x0d75194C804C26912F233A0072A4816DDdcf3173' //receiverEthAddress change this at later stage
+                          name='Rohan' // change this at later stage
+                        />
+                      </div>Chat</td>
 
                   </tr>
                 );

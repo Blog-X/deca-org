@@ -38,7 +38,7 @@ const addMember = async (orgName, memberName, memberAddress) => {
     const response = await AxiosJsInstance.post("api/org/addMember", {
       orgName: orgName,
       memberName: memberName,
-      memberAddress: memberAddress,
+      memberAddress: memberEthAddress,
     });
     if (response.status === 200) {
       alert("Member added successfully");
@@ -48,6 +48,6 @@ const addMember = async (orgName, memberName, memberAddress) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export { addOrganization, getOrganization, addMember };

@@ -18,8 +18,8 @@ const addOrg = async (req, res) => {
         hostAddress: hostAddress,
         members: [
           {
-            name: hostName,
-            address: hostAddress,
+            memberName: hostName,
+            memberEthaddress: hostAddress,
             team: "Admin",
           },
         ],
@@ -78,7 +78,7 @@ const addMember = async (req, res) => {
       };
       let newMembers = org.members;
       newMembers.push(member);
-      const addMember = await org.findOneAndUpdate(
+      const addMember = await orgs.findOneAndUpdate(
         {
           orgName: orgName,
         },
@@ -96,9 +96,9 @@ const addMember = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ error: "Couldn't update organization at this stage. Please try again" });
+    res.status(500).json({
+      error: "Couldn't update organization at this stage. Please try again",
+    });
   }
 };
 

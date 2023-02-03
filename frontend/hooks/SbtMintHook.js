@@ -3,6 +3,7 @@ import { getWalletDetails } from "./getAddress.hook";
 import { ethers } from "ethers";
 import contract from "../contracts/DeOrgSbt.json";
 import Web3 from "web3";
+import { addMember } from "@/api/org.api";
 
 export const mintSBT = async (tokenUrl, address) => {
   let sbt = {
@@ -29,7 +30,7 @@ export const mintSBT = async (tokenUrl, address) => {
   }
 };
 
-export const checkSbtBalance = async () => {
+export const checkSbtBalance = async (name) => {
   try {
     let sbt = {
       abi: contract,
@@ -43,6 +44,13 @@ export const checkSbtBalance = async () => {
     const userAddress = await signer.getAddress();
     const balance = await contractInstance.balanceOf(userAddress);
     console.log("balance", Number(balance));
+    const res = {
+      balance: Number(balance),
+      address: userAddress,
+    };
+    console.log(name);
+    const memberAdd = await addMember("my_org", name, res.address);
+    return res.balance;
   } catch (error) {
     console.log(error);
   }
