@@ -112,9 +112,11 @@ export default function Modal(props) {
                         } else if (props.type === "meet") {
                           Router.push(`/meeting/${joinId}`);
                         } else {
-                          const {balance, address} = await checkSbtBalance();
-                          if (balance >= 1) {
-                            const memberAdd = addMember(joinId, name, address);
+                          const { i } = await checkSbtBalance(name);
+                          console.log(i);
+                          if (i.balance >= 1) {
+                            const memberAdd = addMember(joinId, name, i.address);
+                            console.log(memberAdd);
                             localStorage.setItem(
                               "orgLink",
                               APP_DOMAIN + `/org/${joinId}`
