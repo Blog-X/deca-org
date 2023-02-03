@@ -1,6 +1,35 @@
 import React from "react";
+import { Chat } from "@pushprotocol/uiweb";
+import { useState, useEffect } from "react";
+import { getethAddress } from "@/hooks/getAddress.hook";
+import ChatComp from "@/components/Chat/ChatComp";
 
 const OrgMembers = ({members}) => {
+  const [hidden, setHidden] = useState(true);
+  const [hiddenGrpChats, setHiddenGrpChats] = useState(true);
+  // console.log(lobbyPeers);
+  const [myEthAddress, setMyEthAddress] = useState("");
+  const [receiverEthAddress, setReceiverEthAddress] = useState("");
+  const [receiverName, setReceiverName] = useState(
+    "0x0d75194C804C26912F233A0072A4816DDdcf3173"
+  );
+  const [receiverPeerId, setReceiverPeerId] = useState("");
+
+
+
+
+
+  useEffect(() => {
+    const getAddress = async () => {
+      const ethAddress = await getethAddress();
+      setMyEthAddress(ethAddress);
+    };
+    getAddress();
+  }, []);
+
+
+ 
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -11,6 +40,8 @@ const OrgMembers = ({members}) => {
               <th>Name</th>
               <th>Address</th>
               <th>Team</th>
+              <th>Push Chat
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -22,6 +53,21 @@ const OrgMembers = ({members}) => {
                     <td>{member.name}</td>
                     <td>{member.address}</td>
                     <td>{member.team}</td>
+                    <td 
+                    onClick={() => {
+                      setReceiverEthAddress(member.peerEthAddress);
+                      setReceiverName(member.peerName);
+                      setReceiverPeerId(member.peerId);
+                      setHidden(!hidden);
+                    }}>
+                      <div >
+                <ChatComp
+                  sender= {myEthAddress}
+                  receiver='0x0d75194C804C26912F233A0072A4816DDdcf3173' //receiverEthAddress change this at later stage
+                  name='Rohan' // change this at later stage
+                />
+              </div>Chat</td>
+
                   </tr>
                 );
               })}

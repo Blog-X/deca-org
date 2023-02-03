@@ -22,12 +22,13 @@ export default function LiveStream(){
       />
  
       {stream?.playbackId && (
-        <Player
-          title={stream?.name}
-          playbackId={stream?.playbackId}
-          autoPlay
-          muted
-        />
+        <div className="border-4 border-sky-500 aspect-square h-20px w-10/12 snap-x"><Player
+        title={stream?.name}
+        playbackId='a2fb3rpgxc1oxiwl'
+        autoPlay
+        muted
+      /></div>
+        
       )}
  
       <div>

@@ -57,12 +57,31 @@ const OrgContainer = ({ orgName, address }) => {
             </div>
           </div>
           <div className="my-5 py-2 w-full flex flex-col ">
+            
             <div className="flex justify-apart w-full">
               {org?.hostAddress == myAddress && (
                 <div className="host-controls mx-auto">
                   <button className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg">Add a member</button>
                 </div>
               )}
+              <button 
+              className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg ml-8 mr-8"
+              onClick={() => {
+                router.push("/stream/" + orgName);
+              }}
+              >
+              
+              Start A LiveStream
+              </button>
+              <button 
+              className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg  mr-8"
+              onClick={() => {
+                router.push("/upload/" + orgName);
+              }}
+              >
+                Upload Video Asset
+              </button>
+
               <button
                 className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg"
                 onClick={() => {
@@ -78,6 +97,15 @@ const OrgContainer = ({ orgName, address }) => {
                   Start a meeting!{" "}
                 </Link>
               )}
+              <button
+                className="mx-auto btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg ml-8"
+                onClick={() => {
+                  router.push("/mint/" + orgName);
+                }}
+                
+              >
+                Mint Your Video NFT
+              </button>
             </div>
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>

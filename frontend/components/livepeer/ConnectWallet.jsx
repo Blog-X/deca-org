@@ -16,6 +16,9 @@ export default function ConnectWallet({ setChainId, setAddress }) {
     }
   };
   return (
-        <button onClick={() => handleWalletConnect()}>Connect Wallet</button>
+    <div className="flex h-screen justify-center items-center">
+        <button className="btn btn-primary btn-xs sm:btn-sm md:btn-md  "
+        onClick={() => handleWalletConnect()}>Connect Wallet</button>
+        </div>
   );
 }
