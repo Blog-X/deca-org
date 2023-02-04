@@ -158,8 +158,8 @@ const OrgContainer = ({ orgName, address }) => {
             </div>
           </div>
         </div>
-        <div className="mx-auto">
-          <OrgChat />
+        <div className="mx-auto w-1/2 px-4 mx-4">
+          <OrgChat orgAddress={org?.orgAddress} orgChatss={org?.chats}/>
         </div>
       </div>
     </div>
