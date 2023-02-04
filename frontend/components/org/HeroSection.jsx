@@ -6,7 +6,7 @@ const HeroSection = ({orgName, tagline, image}) => {
       <div className="hero max-h/2-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row">
           <img
-            src={image}
+            src='../images/Deca-Org Logo.png'
             className="max-w-sm rounded-lg shadow-2xl"
           />
           <div>

@@ -8,6 +8,8 @@ import stream from '../../public/stream.jpg';
 
 import Image from 'next/image';
 
+import HeroSection from '../org/HeroSection';
+
 const PosterImage = () => {
   return (
     <Image
@@ -35,6 +37,7 @@ export default function LiveStream() {
 
   return (
     <div>
+      <HeroSection orgName=" 🔴 DecaOrg Live Streaming" />
 
       <div className="border-4 border-sky-500 ">
 
