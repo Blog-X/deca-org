@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const fetchAssets = async () => {
+
+const fetchStream = async () => {
     try {
-        const res = await axios.get('https://livepeer.studio/api/asset?limit=10&allUsers=true',
+        const res = await axios.get('https://livepeer.studio/api/stream/a2fb36d1-f219-4d1e-9b95-6f039aac876b/sessions?record=1',
 
             {
                 headers:
@@ -18,6 +19,5 @@ const fetchAssets = async () => {
 }
 
 
-
-export default fetchAssets;
+export default fetchStream;
 

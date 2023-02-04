@@ -11,7 +11,7 @@ import UploadVideoAsset from '@/components/livepeer/UploadVideoAsset';
 import VideoNFTMinting from '@/components/livepeer/VideoNFTMinting';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import fetchAssets from '@/api/livepeer.api';
+import fetchAssets from '@/api/livepeervideo.api';
 
   const livepeerClient = createReactClient({
     provider: studioProvider({

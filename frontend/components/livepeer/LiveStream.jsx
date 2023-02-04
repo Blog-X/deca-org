@@ -3,8 +3,20 @@ import { Player, useCreateStream } from '@livepeer/react';
 import { useMemo, useState } from 'react';
 
 import { useEffect } from 'react';
-import fetchStreams from '@/api/livepeer.api';
 
+import stream from '../../public/stream.jpg';
+
+import Image from 'next/image';
+
+const PosterImage = () => {
+  return (
+    <Image
+      src={stream}
+      
+      placeholder="blur"
+    />
+  );
+};
 
 export default function LiveStream() {
   const [streamName, setStreamName] = useState('');
@@ -32,6 +44,7 @@ export default function LiveStream() {
           playbackId={playbackId}
           autoPlay
           muted
+          poster={<PosterImage />}
         />
       </div>
 
