@@ -11,6 +11,7 @@ export const mint = async(chainId, title, nftMetadata, setAppState, setMessage, 
     const file = await minter.uploader.pickFile();
 
     //Todo: update app state
+    
     setAppState("Minting")
     setMessage("Creating asset")
     let asset = await minter.api.createAsset(title, file);

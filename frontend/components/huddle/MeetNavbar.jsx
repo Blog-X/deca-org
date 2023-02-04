@@ -1,9 +1,10 @@
 import React from 'react'
 import { APP_NAME } from '@/constants/app.constants'
+import { useHuddleStore } from '@huddle01/huddle01-client/store'
 
 const MeetNavbar = (props) => {
     // console.log(props);
-
+  const peerId = useHuddleStore((state) => state.peerId);
   return (
     <div>
       <div className="drawer text-lg h-fit bg-base-200">
@@ -38,6 +39,9 @@ const MeetNavbar = (props) => {
                   </li>
                   <li>
                     <a>User: {props.name}</a>
+                  </li>
+                  <li>
+                    <a>Peer ID: {peerId}</a>
                   </li>
                 </ul>
               </div>

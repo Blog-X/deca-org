@@ -1,20 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mint } from "../../utils/mint";
+import fetchStream from "@/api/livepeerstream.api";
+import { Link } from "react-router-dom";
 
 const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [stream, setStream] = useState();
   
   const handleSubmit = (e) => {
       e.preventDefault()
       mint(chainId, title, { nftMetadata: {description, traits: { "author": "Rahat"}}}, setAppState, setMessage, setNftInfo)
   }
+  useEffect(() => {
+    const fetchStreamUpload = async () => {
+      const stream = await fetchStream();
+      setStream(stream);
+    };
+    fetchStreamUpload();
+    // console.log(stream);
+  }, [stream]);
+
+  const downloadStream = (stream) => {
+    console.log(stream);
+    stream.mp4Url && window.open(stream.mp4Url, "_blank");
+  }
 
   return (
+    <div className="flex h-screen justify-center textarea-info items-center box-border  p-4 border-4 ">
+      <div className="p-4 m-10 border-2 border-indigo-500 rounded-lg">
+      <h1 className='text-bold text-2xl text-center underline '>Previous Stream Recordings:</h1>
+        {stream && stream.map((stream) => (
+          <div key={stream.id} className="p-2 m-2 border-2 border-indigo-500 rounded-lg " onClick={() => 
+            {
+              downloadStream(stream);
+            }
+          
+          
+          }>
+            
+            <h1>{stream.createdAt}</h1>
+            
+            </div>
+        ))}
+      </div>
     <form onSubmit={(e) => handleSubmit(e)}>
-      <div className="flex-column">
+      <div className="flex-column p-2" >
         <label>NFT Title</label>
         <input
+          className="m-2 textarea textarea-info"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           type="text"
@@ -23,8 +57,9 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
         />
       </div>
       <div className="flex-column">
-        <label>Description</label>
+        <label className="align-top">Description</label>
         <textarea
+          className="m-2 textarea textarea-info"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           type="text"
@@ -34,8 +69,9 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
           required
         />
       </div>
-      <button type="submit">Choose Video and Mint</button>
+      <button type="submit" className="file-input file-input-bordered file-input-primary w-full max-w-xs m-10">Choose Video and Mint</button>
     </form>
+    </div>
   );
 };
 

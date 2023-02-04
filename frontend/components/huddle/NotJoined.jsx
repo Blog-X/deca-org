@@ -7,27 +7,36 @@ import {
 
 import { huddleClient } from "@/constants/api.constants";
 import { useHuddleStore } from "@huddle01/huddle01-client/store";
-
+import { addParticipant } from "@/api/room.api";
 
 const NotJoined = (props) => {
   const hostId = useHuddleStore((state) => state.hostId);
-console.log(hostId);
+  const setMe = useHuddleStore(state => state.setMe);
+  
   const handleJoin = async () => {
     try {
+      setMe('displayName', props.name)
       await huddleClient.join(props.roomId, {
         address: props.ethAddress,
         wallet: "",
         ens: "axit.eth",
       });
-      props.setNameArr([
-        ...props.nameArr,
-        {
-          name: props.name,
-          address: props.ethAddress,
-          id: props.peerId,
-        },
-      ]);
-      alert("You have entered the lobby! Please wait for the host to accept you in the meeting.");
+      const response = await addParticipant(
+        props.roomId,
+        props.peerId,
+        props.name,
+        props.ethAddress
+      );
+      console.log(response);
+      if (response.message === "Peer added to room successfully") {
+        alert(
+          "You have entered the lobby! Please wait for the host to accept you in the meeting."
+        );
+      } else if (response.message === "Room saved successfully") {
+        alert("You are the host now");
+      } else {
+        alert("Error!");
+      }
       console.log("lobby entry");
       //   window.location.reload()
     } catch (error) {
@@ -50,14 +59,16 @@ console.log(hostId);
           id: props.peerId,
         },
       ]);
-      alert("You have entered the lobby! Please wait for the host to accept you in the meeting.");
+      alert(
+        "You have entered the lobby! Please wait for the host to accept you in the meeting."
+      );
       console.log("lobby entry");
       //   window.location.reload()
     } catch (error) {
       console.log({ error });
     }
-  }
-//   console.log(props);
+  };
+  //   console.log(props);
   return (
     <div>
       <div className="mx-auto mt-20 card w-1/3 bg-primary text-primary-content">
@@ -93,12 +104,19 @@ console.log(hostId);
                   ></path>
                 </svg>
                 <span>
-                  Please note that this name will be final and can&apos;t be changed
-                  henceforth in the meeting.
+                  Please note that this name will be final and can&apos;t be
+                  changed henceforth in the meeting.
                 </span>
               </div>
             </div>
-            <button className="btn" onClick = { !hostId ? (async () => await handleJoin()) : (async () => await handleLobby())}>
+            <button
+              className="btn"
+              onClick={
+                !hostId
+                  ? async () => await handleJoin()
+                  : async () => await handleLobby()
+              }
+            >
               Join now
             </button>
           </div>
