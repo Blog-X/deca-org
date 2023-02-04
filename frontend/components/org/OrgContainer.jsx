@@ -9,6 +9,7 @@ import PastRecordings from "./PastRecordings";
 import { getOrganization } from "@/api/org.api";
 import OrgMembers from "./OrgMembers";
 import { getethAddress } from "@/hooks/getAddress.hook";
+import Modal from "../styleComps/Modal";
 
 const OrgContainer = ({ orgName, address }) => {
   const [team, setTeam] = React.useState([]);
@@ -60,11 +61,11 @@ const OrgContainer = ({ orgName, address }) => {
             {/* <div className="flex flex-row w-full"> */}
             {org?.hostAddress == myAddress && (
               <div className="host-controls ">
-              <Link href={'/sbt'}>
-                <button className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3">
-                  Add a member
-                </button>
-              </Link>
+                <Link href={"/sbt"}>
+                  <button className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3">
+                    Add a member
+                  </button>
+                </Link>
               </div>
             )}
             <div className="host-controls ">
@@ -76,6 +77,22 @@ const OrgContainer = ({ orgName, address }) => {
               >
                 Start A LiveStream
               </button>
+            </div>
+            <div className="host-controls ">
+              <Modal
+                type={"createTeam"}
+                orgAddress={org?.orgAddress}
+                title={"Create team"}
+                clickText={"Create team"}
+              />
+            </div>
+            <div className="host-controls ">
+              <Modal
+                type={"createTeam"}
+                orgAddress={org?.orgAddress}
+                title={"Join team"}
+                clickText={"Create team"}
+              />
             </div>
             <div className="host-controls ">
               <button
@@ -118,7 +135,7 @@ const OrgContainer = ({ orgName, address }) => {
             {/* </div> */}
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>
-          <Team team={team} />
+          <Team team={org?.teams} />
 
           <div className="my-5 py-2 w-full flex flex-col ">
             <h1 className="text-2xl mx-auto my-4">Past recordings</h1>

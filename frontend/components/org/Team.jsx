@@ -17,16 +17,16 @@ const Team = ({ team }) => {
             {team &&
               team.map((member, index) => {
                 return (
-                  <tr key={index} className={index % 2 === 0 ? `active`: ""}>
+                  <tr key={index} className={index % 2 === 0 ? ``: "active"}>
                     <th>{index + 1}</th>
-                    <td>{member.name}</td>
+                    <td>{member.teamName}</td>
                     <td>{member.task}</td>
                     <td>{member.noOfMembers}</td>
                   </tr>
                 );
               })}
 
-            <tr>
+            {/* <tr>
               <th>1</th>
               <td>Team (x)</td>
               <td>Finance</td>
@@ -43,7 +43,7 @@ const Team = ({ team }) => {
               <td>Team (x)</td>
               <td>Cloud</td>
               <td>5</td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>
