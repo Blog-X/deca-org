@@ -3,7 +3,7 @@ import { Player, useAssetMetrics, useCreateAsset } from '@livepeer/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useEffect } from 'react';
-import fetchAssets from '@/api/livepeer.api';
+import fetchAssets from '@/api/livepeervideo.api';
 
 
 export default function UploadVideoAsset() {
@@ -90,7 +90,8 @@ export default function UploadVideoAsset() {
 
 
     <div className=" grid grid-cols-2 gap-4">
-      <div className='border-4 border-indigo-500'>
+      <div className='border-4 border-indigo-500 rounded-lg'>
+       <h1 className='text-bold text-2xl text-center underline p-4'>Uploaded Assets:</h1>
         {assets && assets.map((asset) => (
           <div key={asset.id} className='p-2 m-2 border-2 border-indigo-500 rounded-lg ' onClick={() => {
 
