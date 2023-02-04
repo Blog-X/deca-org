@@ -9,6 +9,8 @@ import {
 } from "@/constants/app.constants";
 import { getWalletDetails } from "@/hooks/getAddress.hook";
 
+
+
 export default function Home() {
   
 
@@ -30,7 +32,7 @@ export default function Home() {
           <div className="splash-screen-content-inner relative h-full w-full z-10 flex flex-col justify-between">
             <div>
               <Image
-                src="/images/logo.png"
+                src= "/images/Deca-Org Logo.png"
                 alt="Team App Logo"
                 className="splash-screen-content-inner-logo mx-auto mt-6 p-4 sm:p hover:shadow-lg rounded-full hover:px-3 hover:py-3"
                 width={350}
