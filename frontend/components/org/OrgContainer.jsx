@@ -90,7 +90,7 @@ const OrgContainer = ({ orgName, address }) => {
               <Modal
                 type={"createTeam"}
                 orgAddress={org?.orgAddress}
-                title={"Join team"}
+                title={"Create a team"}
                 clickText={"Create team"}
               />
             </div>
@@ -103,6 +103,14 @@ const OrgContainer = ({ orgName, address }) => {
               >
                 Upload/View Video Assets
               </button>
+            </div>
+            <div className="host-controls ">
+              <Modal
+                type={"joinTeam"}
+                orgAddress={org?.orgAddress}
+                title={"Join team"}
+                clickText={"Join team"}
+              />
             </div>
             {/* <hr /> */}
             <div className="host-controls ">
@@ -135,7 +143,7 @@ const OrgContainer = ({ orgName, address }) => {
             {/* </div> */}
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>
-          <Team team={org?.teams} />
+          <Team team={org?.teams} orgName={orgName} />
 
           <div className="my-5 py-2 w-full flex flex-col ">
             <h1 className="text-2xl mx-auto my-4">Past recordings</h1>

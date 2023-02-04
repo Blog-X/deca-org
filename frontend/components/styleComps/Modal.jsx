@@ -1,5 +1,5 @@
 import React from "react";
-import { createGroup, deployContract } from "@/hooks/SmartContractFunc";
+import { addEmployeeToGroup, createGroup, deployContract } from "@/hooks/SmartContractFunc";
 import Loading from "./Loading";
 import Router from "next/router";
 import { APP_DOMAIN } from "@/constants/app.constants";
@@ -103,6 +103,27 @@ export default function Modal(props) {
                           className="input input-bordered input-primary w-full max-w-xs m-2"
                         />
                       </div>
+                    ) : props.type === "joinTeam" ? (
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter team name"
+                          onChange={(e) => setTeamName(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Enter your name"
+                          onChange={(e) => setName(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Your Eth address"
+                          onChange={(e) => setMyEthAddress(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                      </div>
                     ) : (
                       <input
                         type="text"
@@ -141,8 +162,22 @@ export default function Modal(props) {
                           console.log(address.address);
                         } else if (props.type === "meet") {
                           Router.push(`/meeting/${joinId}`);
-                        } else if (props.type === 'createTeam') {
-                          const tx = await createGroup(teamName, props.orgAddress, name, myEthAddress, task);
+                        } else if (props.type === "createTeam") {
+                          const tx = await createGroup(
+                            teamName,
+                            props.orgAddress,
+                            name,
+                            myEthAddress,
+                            task
+                          );
+                        } else if (props.type === 'joinTeam') {
+                          const tx = await addEmployeeToGroup(
+                            teamName,
+                            myEthAddress,
+                            props.orgAddress,
+                            name,
+                          );
+                          console.log(tx);
                         } else {
                           const res = await checkSbtBalance(joinId, name);
                           console.log(res);
