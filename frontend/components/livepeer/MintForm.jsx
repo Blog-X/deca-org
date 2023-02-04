@@ -11,7 +11,7 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
   }
 
   return (
-    <div className="flex h-screen justify-center items-center">
+    <div className="flex h-screen justify-center textarea-info items-center box-border  p-4 border-4 ">
     <form onSubmit={(e) => handleSubmit(e)}>
       <div className="flex-column p-2" >
         <label>NFT Title</label>

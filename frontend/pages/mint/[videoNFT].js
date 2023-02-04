@@ -11,11 +11,11 @@ import UploadVideoAsset from '@/components/livepeer/UploadVideoAsset';
 import VideoNFTMinting from '@/components/livepeer/VideoNFTMinting';
 
 
-  const livepeerClient = createReactClient({
-    provider: studioProvider({
-      apiKey: 'b8793269-4a3b-4da1-a424-097f2c64f7d5',
-    }),
-  });
+const livepeerClient = createReactClient({
+  provider: studioProvider({
+    apiKey: 'bf8c946f-2112-4226-bca7-075a2221564b',
+  }),
+});
    
 
 export default function livepeervideoNft() {

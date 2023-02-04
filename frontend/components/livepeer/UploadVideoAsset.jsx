@@ -2,10 +2,14 @@ import { Player, useAssetMetrics, useCreateAsset } from '@livepeer/react';
  
 import { useCallback, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useEffect } from 'react';
+import fetchAssets from '@/api/livepeer.api';
 
 
 export default function UploadVideoAsset(){
     const [video, setVideo] = useState();
+    const [playbackId, setPlaybackId] = useState();
+    const [hidden, setHidden] = useState(true);
   const {
     mutate: createAsset,
     data: asset,
@@ -58,13 +62,57 @@ export default function UploadVideoAsset(){
         : null,
     [progress],
   );
+  const [assets, setAssets] = useState([]);
+
+  
+  
+    useEffect(() => {
+      
+      const fetchVideo = async () => {
+        const x = await fetchAssets();
+        setAssets(x);
+      }
+      
+      fetchVideo();
+      // console.log(assets);
+
+
+    }, [assets]);
+
+    const playAsset = (playbackId) => {
+      setPlaybackId(playbackId);
+    }
+
  
   return (
     
+    
   
 
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content text-center">
+    <div className=" grid grid-cols-2 gap-4">
+      <div className='border-4 border-indigo-500'>
+      {assets && assets.map((asset) => (
+          <div key={asset.id} className='p-2 m-2 border-2 border-sky-400 rounded-lg ' onClick={()=> {
+            
+            playAsset(asset.playbackId);
+            setHidden(!hidden);
+            }}>
+            <h1>{asset.name}</h1>
+            {/* <p>{asset.id}</p> */}
+            {/* <p>{asset.createdAt}</p> */}
+            {/* <p>{asset.playbackId}</p> */}
+            
+            
+            </div>
+        ))
+}
+      </div>
+      
+      <div className="hero-content text-center grid grid-rows-4 grid-flow-col gap-4 ">
+        <div className={hidden ? "hidden" : "border-2 mt-2"}>
+          
+        <Player  playbackId={playbackId} />
+        </div>
         
     
   
@@ -77,6 +125,8 @@ export default function UploadVideoAsset(){
           {error?.message && <p>{error.message}</p>}
         </div>
       )}
+      
+      
  
       {asset?.[0]?.playbackId && (
         <Player title={asset[0].name} playbackId={asset[0].playbackId} />
@@ -87,7 +137,7 @@ export default function UploadVideoAsset(){
           <p>Views: {metrics?.metrics?.[0]?.startViews}</p>
         )}
  
-        {video ? <p>{video.name}</p> : <p>Select a video file to upload.</p>}
+        {video ? <p>{video.name}</p> : <p></p>}
  
         {progressFormatted && <p>{progressFormatted}</p>}
  
@@ -97,6 +147,7 @@ export default function UploadVideoAsset(){
               createAsset?.();
             }}
             disabled={isLoading || !createAsset}
+            className=' border-2 border-sky-500 btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3 '
           >
             Upload
           </button>
@@ -105,4 +156,10 @@ export default function UploadVideoAsset(){
       </div>
     </div>
   );
+
+  // return (
+  //   <div className='grid grid-cols-2 gap-4'> 
+  //   <div>hi</div>
+  //   <div>hi</div></div>
+  // );
 }
