@@ -17,5 +17,7 @@ const fetchAssets = async () => {
     }
 }
 
+
+
 export default fetchAssets;
 
