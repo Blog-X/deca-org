@@ -101,7 +101,7 @@ const OrgContainer = ({ orgName, address }) => {
                   router.push("/upload/" + orgName);
                 }}
               >
-                Upload Video Asset
+                Upload/View Video Assets
               </button>
             </div>
             <div className="host-controls ">
