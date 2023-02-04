@@ -4,7 +4,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 import AxiosJsInstance from "./AxiosInstance";
 import { getSigner, getWalletDetails } from "./getAddress.hook";
 import { addOrganization } from "@/api/org.api";
-import { addTeam } from "@/api/team.api";
+import { addEmployeeToTeam, addTeam } from "@/api/team.api";
 
 // create function to deploy contract
 export const deployContract = async (orgName, hostName) => {
@@ -119,7 +119,8 @@ export const createGroup = async (groupName, orgAddress, myName, myEthAddress, t
 };
 
 // function to add employee to group
-export const addEmployeeToGroup = async (groupName, employeeAddress, orgAddress) => {
+export const addEmployeeToGroup = async (groupName, employeeAddress, orgAddress, employeeName) => {
+  const {address, signer} = await getWalletDetails();
   try {
     const contractInstance = new ethers.Contract(
       orgAddress,
@@ -132,6 +133,7 @@ export const addEmployeeToGroup = async (groupName, employeeAddress, orgAddress)
     );
 
     await tx.wait();
+    await addEmployeeToTeam(groupName, employeeAddress, orgAddress, employeeName);
     return tx;
   } catch (error) {
     console.log(error);

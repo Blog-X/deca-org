@@ -1,6 +1,7 @@
 import React from "react";
+import Link from "next/link";
 
-const Team = ({ team }) => {
+const Team = ({ team, orgName }) => {
   return (
     <div>
       <div className="overflow-x-auto">
@@ -17,9 +18,13 @@ const Team = ({ team }) => {
             {team &&
               team.map((member, index) => {
                 return (
-                  <tr key={index} className={index % 2 === 0 ? ``: "active"}>
+                  <tr key={index} className={index % 2 === 0 ? `` : "active"}>
                     <th>{index + 1}</th>
-                    <td>{member.teamName}</td>
+                    <td>
+                    <Link className="link link-accent" href={`/org/${orgName}/${member.teamName}`}>
+                      {member.teamName}
+                    </Link>
+                    </td>
                     <td>{member.task}</td>
                     <td>{member.noOfMembers}</td>
                   </tr>
