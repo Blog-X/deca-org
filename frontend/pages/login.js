@@ -28,10 +28,10 @@ export default function VerifyMessage() {
   const [orgLink, setOrgLink] = useState();
 
   useEffect(() => {
-    if (localStorage){
-      setOrgLink(localStorage?.getItem("orgLink"))
+    if (localStorage) {
+      setOrgLink(localStorage?.getItem("orgLink"));
     }
-  }, [])
+  }, []);
 
   const detectCurrentProvider = () => {
     let provider;
@@ -93,7 +93,7 @@ export default function VerifyMessage() {
 
   return (
     <div>
-      <form className="m-4" onSubmit={handleVerification}>
+      {/* <form className="m-4" onSubmit={handleVerification}>
         <div className="credit-card w-full shadow-lg mx-auto rounded-xl bg-base-200">
           <main className="mt-4 p-4">
             <h1 className="text-xl font-semibold text-white text-center">
@@ -134,11 +134,8 @@ export default function VerifyMessage() {
             <SuccessMessage message={successMsg} />
           </div>
         </div>
-      </form>
-      Your organization link:{" "}
-      {orgLink && <Link href={orgLink}>
-        {orgLink}
-      </Link>}
+      </form> */}
+      {orgLink && <Link href={orgLink}>Your organization link: {orgLink}</Link>}
       <LoginOptions />
     </div>
   );
