@@ -112,17 +112,21 @@ export default function Modal(props) {
                         } else if (props.type === "meet") {
                           Router.push(`/meeting/${joinId}`);
                         } else {
-                          const { i } = await checkSbtBalance(name);
-                          console.log(i);
-                          if (i.balance >= 1) {
-                            const memberAdd = addMember(joinId, name, i.address);
-                            console.log(memberAdd);
-                            localStorage.setItem(
-                              "orgLink",
-                              APP_DOMAIN + `/org/${joinId}`
-                            );
+                          const res = await checkSbtBalance(joinId, name);
+                          console.log(res);
+                          if (res)
                             Router.push(`/org/${joinId}`);
-                          }
+                          else
+                            alert("You don't have enough SBT to join this organization");
+                          // if (i.balance >= 1) {
+                          //   const memberAdd = addMember(joinId, name, i.address);
+                          //   console.log(memberAdd);
+                          //   localStorage.setItem(
+                          //     "orgLink",
+                          //     APP_DOMAIN + `/org/${joinId}`
+                          //   );
+                          //   Router.push(`/org/${joinId}`);
+                          // }
                         }
                         setShowModal(false);
                       } catch (err) {
