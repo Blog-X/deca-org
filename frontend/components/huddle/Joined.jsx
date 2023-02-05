@@ -12,6 +12,7 @@ import Chat from "./Chat";
 import GrpChat from "./GrpCHat";
 import IndividualChat from "./IndividualChat";
 import Transcript from "./Transcript";
+import { themeChange } from "theme-change";
 
 const Joined = (props) => {
   const peerId = useHuddleStore((state) => state.peerId);
@@ -44,6 +45,10 @@ const Joined = (props) => {
     return resp;
   };
 
+  useEffect(() => {
+    themeChange(false);
+    // 👆 false parameter is required for react project
+  }, []);
   useEffect(() => {
     const updateHost = async () => {
       if (peerId === hostId) {
@@ -157,6 +162,16 @@ const Joined = (props) => {
           <div className="transcript">
             <Transcript />
           </div>
+          <div className="flex items-center p-2 m-2">
+            <select data-choose-theme className="select select-info w-full max-w-xs mx-auto">
+              <option disabled selected value="">Change theme</option>
+              <option value="dark">Dark</option>
+              <option value="halloween">Halloween</option>
+              <option value="aqua">Aqua</option>
+              <option value="cupcake">Cupcake</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
         </div>
         <div className="bg- w-1/4 mx-2 h-screen ">
           <div className="participants bg-base-300 max-h-1/3 overflow-y-auto">
@@ -214,7 +229,9 @@ const Joined = (props) => {
                             }}
                             className="p-1"
                           >
-                            {member.peerId != peerId && <button className="btn-info btn">Chat</button>}
+                            {member.peerId != peerId && (
+                              <button className="btn-info btn">Chat</button>
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -294,15 +311,18 @@ const Joined = (props) => {
                 <IndividualChat otherPeerId={receiverPeerId} />
               </div>
               <div className="w-full flex justify-center p-4">
-                <button onClick={() => setHiddenGrpChats(!hiddenGrpChats)} className="btn btn-accent relative w-3/4 text-md">
+                <button
+                  onClick={() => setHiddenGrpChats(!hiddenGrpChats)}
+                  className="btn btn-accent relative w-3/4 text-md"
+                >
                   Group chats
                 </button>
               </div>
-              { !hiddenGrpChats && 
+              {!hiddenGrpChats && (
                 <div>
                   <GrpChat />
                 </div>
-              }
+              )}
             </div>
           </div>
         </div>

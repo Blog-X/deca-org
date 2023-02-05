@@ -121,12 +121,14 @@ const UploadImage = () => {
           Upload file
         </button>
       </form> */}
+      <div className="w-fit mx-auto">
       {imgUrl && (
         <div className="mx-auto">
-          <Link href={imgUrl}>Image link</Link>
+          <Link href={imgUrl}>SBT link</Link>
           <img src={imgUrl} alt="uploaded" />
         </div>
       )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { deployContract } from "@/hooks/SmartContractFunc";
+import { addEmployeeToGroup, createGroup, deployContract } from "@/hooks/SmartContractFunc";
 import Loading from "./Loading";
 import Router from "next/router";
 import { APP_DOMAIN } from "@/constants/app.constants";
@@ -12,11 +12,14 @@ export default function Modal(props) {
   const [joinId, setJoinId] = React.useState("");
   const [name, setName] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [teamName, setTeamName] = React.useState("");
+  const [task, setTask] = React.useState("");
+  const [myEthAddress, setMyEthAddress] = React.useState("");
 
   return (
     <>
       <button
-        className="btn btn-primary  text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="btn bg-[#f71953] m-3 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -73,6 +76,54 @@ export default function Modal(props) {
                           className="input input-bordered input-primary w-full max-w-xs m-2"
                         />
                       </div>
+                    ) : props.type === "createTeam" ? (
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter team name"
+                          onChange={(e) => setTeamName(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Enter team task"
+                          onChange={(e) => setTask(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Enter your name"
+                          onChange={(e) => setName(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Your Eth address"
+                          onChange={(e) => setMyEthAddress(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                      </div>
+                    ) : props.type === "joinTeam" ? (
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter team name"
+                          onChange={(e) => setTeamName(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Enter your name"
+                          onChange={(e) => setName(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Your Eth address"
+                          onChange={(e) => setMyEthAddress(e.target.value)}
+                          className="input input-bordered input-primary w-full max-w-xs m-2"
+                        />
+                      </div>
                     ) : (
                       <input
                         type="text"
@@ -111,18 +162,39 @@ export default function Modal(props) {
                           console.log(address.address);
                         } else if (props.type === "meet") {
                           Router.push(`/meeting/${joinId}`);
+                        } else if (props.type === "createTeam") {
+                          const tx = await createGroup(
+                            teamName,
+                            props.orgAddress,
+                            name,
+                            myEthAddress,
+                            task
+                          );
+                        } else if (props.type === 'joinTeam') {
+                          const tx = await addEmployeeToGroup(
+                            teamName,
+                            myEthAddress,
+                            props.orgAddress,
+                            name,
+                          );
+                          console.log(tx);
                         } else {
-                          const { i } = await checkSbtBalance(name);
-                          console.log(i);
-                          if (i.balance >= 1) {
-                            const memberAdd = addMember(joinId, name, i.address);
-                            console.log(memberAdd);
-                            localStorage.setItem(
-                              "orgLink",
-                              APP_DOMAIN + `/org/${joinId}`
+                          const res = await checkSbtBalance(joinId, name);
+                          console.log(res);
+                          if (res) Router.push(`/org/${joinId}`);
+                          else
+                            alert(
+                              "You don't have enough SBT to join this organization"
                             );
-                            Router.push(`/org/${joinId}`);
-                          }
+                          // if (i.balance >= 1) {
+                          //   const memberAdd = addMember(joinId, name, i.address);
+                          //   console.log(memberAdd);
+                          //   localStorage.setItem(
+                          //     "orgLink",
+                          //     APP_DOMAIN + `/org/${joinId}`
+                          //   );
+                          //   Router.push(`/org/${joinId}`);
+                          // }
                         }
                         setShowModal(false);
                       } catch (err) {

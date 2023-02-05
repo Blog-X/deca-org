@@ -4,6 +4,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 import AxiosJsInstance from "./AxiosInstance";
 import { getSigner, getWalletDetails } from "./getAddress.hook";
 import { addOrganization } from "@/api/org.api";
+import { addEmployeeToTeam, addTeam } from "@/api/team.api";
 
 // create function to deploy contract
 export const deployContract = async (orgName, hostName) => {
@@ -101,14 +102,16 @@ export const addEmployee = async (employeeAddress, employeeName) => {
 };
 
 // function to create a group
-export const createGroup = async (groupName) => {
+export const createGroup = async (groupName, orgAddress, myName, myEthAddress, task) => {
+  const {address, signer} = await getWalletDetails();
   try {
     const contractInstance = new ethers.Contract(
-      localStorage.getItem("contractAddress") || "",
+      orgAddress,
       contract.abi,
       signer
     );
     const tx = await contractInstance.createGroup(groupName);
+      const response = addTeam(orgAddress, groupName, task, myEthAddress, myName);
     return tx;
   } catch (error) {
     console.log(error);
@@ -116,10 +119,11 @@ export const createGroup = async (groupName) => {
 };
 
 // function to add employee to group
-export const addEmployeeToGroup = async (groupName, employeeAddress) => {
+export const addEmployeeToGroup = async (groupName, employeeAddress, orgAddress, employeeName) => {
+  const {address, signer} = await getWalletDetails();
   try {
     const contractInstance = new ethers.Contract(
-      localStorage.getItem("contractAddress") || "",
+      orgAddress,
       contract.abi,
       signer
     );
@@ -127,27 +131,9 @@ export const addEmployeeToGroup = async (groupName, employeeAddress) => {
       groupName,
       employeeAddress
     );
-    const apiResponse = await PushAPI.payloads.sendNotification({
-      signer,
-      type: 3, // target
-      identityType: 2, // direct payload
-      notification: {
-        title: `New Message`,
-        body: `Congtratulations,${groupName}! You have been added to a new group.`,
-      },
-      payload: {
-        title: `New Message`,
-        body: `Congtratulations,${groupName}! You have been added to a new organisation.`,
-        cta: "",
-        img: "",
-      },
-      recipients: employeeAddress, // recipient address
-      channel: "0x3d6e6678E43ecd302867EE0c92bcBF2Fd6C60239", // your channel address
-      env: "staging",
-    });
-    console.log(apiResponse);
 
     await tx.wait();
+    await addEmployeeToTeam(groupName, employeeAddress, orgAddress, employeeName);
     return tx;
   } catch (error) {
     console.log(error);

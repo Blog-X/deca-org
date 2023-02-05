@@ -2,7 +2,7 @@ import React from "react";
 import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
 
-export default function FileEncrypt(){
+export default function FileEncrypt({setCid}){
     const encryptionSignature = async() =>{
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
@@ -39,7 +39,17 @@ export default function FileEncrypt(){
           sig.signedMessage,
           progressCallback
         );
-        console.log(response);
+        console.log(response.data.Hash);
+        response.data && setCid(response.data.Hash);
+        const list = localStorage.getItem('list');
+        console.log("list = " + list);
+        if(list){
+          const newList = list + ',' + response.data.Hash;
+          localStorage.setItem('list', newList);
+        }else{
+          localStorage.setItem('list', response.data.Hash);
+        }
+        console.log(localStorage.getItem('list'));
         /*
           output:
             {
@@ -47,13 +57,13 @@ export default function FileEncrypt(){
               Size: "318557",
               Hash: "QmcuuAtmYqbPYmPx3vhJvPDi61zMxYvJbfENMjBQjq7aM3"
             }
-          Note: Hash in response is CID.
+          Note: Hash in response.data is CID.
         */
       }
     
       return (
         <div className="App">
-          <input onChange={e=>deployEncrypted(e)} type="file" />
+          <input className="file-input file-input-bordered w-full max-w-xs" onChange={e=>deployEncrypted(e)} type="file" />
         </div>
       );
 }

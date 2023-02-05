@@ -9,6 +9,8 @@ import PastRecordings from "./PastRecordings";
 import { getOrganization } from "@/api/org.api";
 import OrgMembers from "./OrgMembers";
 import { getethAddress } from "@/hooks/getAddress.hook";
+import Modal from "../styleComps/Modal";
+import LighthouseContainer from "../lighthouse/LighthouseContainer";
 
 const OrgContainer = ({ orgName, address }) => {
   const [team, setTeam] = React.useState([]);
@@ -41,14 +43,14 @@ const OrgContainer = ({ orgName, address }) => {
   console.log(org);
   return (
     <div className="px-4">
-      <HeroSection orgName={orgName} tagline={org?.orgAddress} />
+      <HeroSection orgName={orgName} tagline={org?.orgAddress} image={org?.logo} />
       <div className="flex flex-col sm:flex-row">
         <div className="w-full md:w-1/2">
           <div className="">
             <h1 className="text-2xl mx-auto w-fit my-10"></h1>
             <div className="collapse">
               <input type="checkbox" className="peer" />
-              <div className="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+              <div className="collapse-title bg-base-200 text-primary-content peer-checked:bg-base-300 peer-checked:text-secondary-content">
                 Click here to show/hide Members
               </div>
               <div className="collapse-content bg-base-300 text-primary-content peer-checked:bg-base-300 peer-checked:text-secondary-content">
@@ -56,20 +58,37 @@ const OrgContainer = ({ orgName, address }) => {
               </div>
             </div>
           </div>
-          <div className="my-5 py-2 w-full flex flex-row flex-wrap  ">
+          <div className="my-5 py-2 w-5/6 flex flex-row flex-wrap mx-auto ">
             {/* <div className="flex flex-row w-full"> */}
             {org?.hostAddress == myAddress && (
               <div className="host-controls ">
-              <Link href={'/sbt'}>
-                <button className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3">
-                  Add a member
-                </button>
-              </Link>
+                <Link href={"/sbt"}>
+                  <button className=" btn  bg-[#f71953] text-white  text-xs  m-3">
+                    Add a member
+                  </button>
+                </Link>
               </div>
             )}
             <div className="host-controls ">
+              <Modal
+                type={"joinTeam"}
+                orgAddress={org?.orgAddress}
+                title={"Join team"}
+                clickText={"Join team"}
+              />
+            </div>
+            
+            <div className="host-controls ">
+              <Modal
+                type={"createTeam"}
+                orgAddress={org?.orgAddress}
+                title={"Create a team"}
+                clickText={"Create team"}
+              />
+            </div>
+            <div className="host-controls ">
               <button
-                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
                 onClick={() => {
                   router.push("/stream/" + orgName);
                 }}
@@ -77,20 +96,12 @@ const OrgContainer = ({ orgName, address }) => {
                 Start A LiveStream
               </button>
             </div>
-            <div className="host-controls ">
-              <button
-                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3"
-                onClick={() => {
-                  router.push("/upload/" + orgName);
-                }}
-              >
-                Upload Video Asset
-              </button>
-            </div>
+            
+            
             {/* <hr /> */}
             <div className="host-controls ">
               <button
-                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
                 onClick={() => {
                   setMeetLink("/meeting/" + orgName);
                   console.log(meetLink);
@@ -107,7 +118,7 @@ const OrgContainer = ({ orgName, address }) => {
             )}
             <div className="host-controls ">
               <button
-                className=" btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3 ml-8"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
                 onClick={() => {
                   router.push("/mint/" + orgName);
                 }}
@@ -115,26 +126,37 @@ const OrgContainer = ({ orgName, address }) => {
                 Mint Your Video NFT
               </button>
             </div>
+            <div className="host-controls ">
+              <button
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+                onClick={() => {
+                  router.push("/upload/" + orgName);
+                }}
+              >
+                Upload/View Video Assets
+              </button>
+            </div>
             {/* </div> */}
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>
-          <Team team={team} />
+          <Team team={org?.teams} orgName={orgName} />
 
           <div className="my-5 py-2 w-full flex flex-col ">
-            <h1 className="text-2xl mx-auto my-4">Past recordings</h1>
-            <PastRecordings recordings={org?.meet_recordings} />
-            <div className="mx-auto my-4">
+            {/* <h1 className="text-2xl mx-auto my-4">Past recordings</h1> */}
+            {/* <PastRecordings recordings={org?.meet_recordings} /> */}
+            {/* <div className="mx-auto my-4">
               Wanna stream some stuff to your organization? Click here to stream
               using Livepeer!
             </div>
             <div className="mx-auto my-4">
               Need a place to store files permanently with complete security?
               CLick here and store your files using LightHouse!
-            </div>
+            </div> */}
+            <LighthouseContainer />
           </div>
         </div>
-        <div className="mx-auto">
-          <OrgChat />
+        <div className="mx-auto w-1/2 px-4 mx-4">
+          <OrgChat orgAddress={org?.orgAddress} orgChatss={org?.chats} orgname={orgName}/>
         </div>
       </div>
     </div>

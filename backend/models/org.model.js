@@ -28,6 +28,11 @@ const orgSchema = new mongoose.Schema({
     required: false,
     default: "",
   },
+  chats: [{
+    peerId: String,
+    displayName: String,
+    message: String,
+  }],
   meet_recordings: [Object],
 }, {
     timestamps: true,

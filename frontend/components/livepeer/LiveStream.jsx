@@ -1,48 +1,57 @@
 import { Player, useCreateStream } from '@livepeer/react';
- 
+
 import { useMemo, useState } from 'react';
 
+import { useEffect } from 'react';
 
-export default function LiveStream(){
-    const [streamName, setStreamName] = useState('');
+import stream from '../../public/stream.jpg';
+
+import Image from 'next/image';
+
+import HeroSection from '../org/HeroSection';
+
+const PosterImage = () => {
+  return (
+    <Image
+      src={stream}
+      
+      placeholder="blur"
+    />
+  );
+};
+
+export default function LiveStream() {
+  const [streamName, setStreamName] = useState('');
+  const [playbackId, setPlaybackId] = useState('');
   const {
     mutate: createStream,
     data: stream,
     status,
   } = useCreateStream(streamName ? { name: streamName } : null);
- 
+
   const isLoading = useMemo(() => status === 'loading', [status]);
- 
+
+  useEffect(() => {
+    setPlaybackId('a2fb3rpgxc1oxiwl');
+  }, []);
+
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Stream name"
-        onChange={(e) => setStreamName(e.target.value)}
-      />
- 
-      {stream?.playbackId && (
-        <div className="border-4 border-sky-500 aspect-square h-20px w-10/12 snap-x"><Player
-        title={stream?.name}
-        playbackId='a2fb3rpgxc1oxiwl'
-        autoPlay
-        muted
-      /></div>
-        
-      )}
- 
-      <div>
-        {!stream && (
-          <button
-            onClick={() => {
-              createStream?.();
-            }}
-            disabled={isLoading || !createStream}
-          >
-            Create Stream
-          </button>
-        )}
+      <HeroSection orgName=" 🔴 DecaOrg Live Streaming" />
+
+      <div className="border-4 border-sky-500 ">
+
+
+        <Player
+          title={stream?.name}
+          playbackId={playbackId}
+          autoPlay
+          muted
+          poster={<PosterImage />}
+        />
       </div>
+
+
     </div>
   );
 }

@@ -4,6 +4,9 @@ import { ethers } from "ethers";
 import contract from "../contracts/DeOrgSbt.json";
 import Web3 from "web3";
 import { addMember } from "@/api/org.api";
+import { APP_DOMAIN } from "@/constants/app.constants";
+import { useRouter } from "next/router";
+  // const router = useRouter();
 
 export const mintSBT = async (tokenUrl, address) => {
   let sbt = {
@@ -30,7 +33,9 @@ export const mintSBT = async (tokenUrl, address) => {
   }
 };
 
-export const checkSbtBalance = async (name) => {
+export const checkSbtBalance = async (orgName, name) => {
+  // const router = useRouter();
+
   try {
     let sbt = {
       abi: contract,
@@ -49,9 +54,14 @@ export const checkSbtBalance = async (name) => {
       address: userAddress,
     };
     console.log(name);
-    const memberAdd = await addMember("my_org", name, res.address);
-
-    return res.balance;
+    if (balance >= 1) {
+      const memberAdd = await addMember(orgName, name, res.address);
+      console.log(memberAdd);
+      localStorage?.setItem("orgLink", APP_DOMAIN + `/org/${orgName}`);
+      // router.push(`/org/${orgName}`);
+      return true;
+    }
+    return false;
   } catch (error) {
     console.log(error);
   }
