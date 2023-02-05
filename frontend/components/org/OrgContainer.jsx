@@ -11,6 +11,7 @@ import OrgMembers from "./OrgMembers";
 import { getethAddress } from "@/hooks/getAddress.hook";
 import Modal from "../styleComps/Modal";
 import LighthouseContainer from "../lighthouse/LighthouseContainer";
+import CrossChainBridge from "../crosschainbridge/CrossChainBridge";
 
 const OrgContainer = ({ orgName, address }) => {
   const [team, setTeam] = React.useState([]);
@@ -43,7 +44,11 @@ const OrgContainer = ({ orgName, address }) => {
   console.log(org);
   return (
     <div className="px-4">
-      <HeroSection orgName={orgName} tagline={org?.orgAddress} image={org?.logo} />
+      <HeroSection
+        orgName={orgName}
+        tagline={org?.orgAddress}
+        image={org?.logo}
+      />
       <div className="flex flex-col sm:flex-row">
         <div className="w-full md:w-1/2">
           <div className="">
@@ -77,7 +82,7 @@ const OrgContainer = ({ orgName, address }) => {
                 clickText={"Join team"}
               />
             </div>
-            
+
             <div className="host-controls ">
               <Modal
                 type={"createTeam"}
@@ -96,8 +101,7 @@ const OrgContainer = ({ orgName, address }) => {
                 Start A LiveStream
               </button>
             </div>
-            
-            
+
             {/* <hr /> */}
             <div className="host-controls ">
               <button
@@ -136,6 +140,29 @@ const OrgContainer = ({ orgName, address }) => {
                 Upload/View Video Assets
               </button>
             </div>
+            <div className="host-controls ">
+              {/* The button to open modal */}
+              <label htmlFor="my-modal" className="btn  bg-[#f71953] text-white  text-xs  m-3 ">
+                Cross-chain token exchange
+              </label>
+
+              {/* Put this part before </body> tag */}
+              <input type="checkbox" id="my-modal" className="modal-toggle" />
+              <div className="modal">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg mb-4">
+                    Cross-chain token exchange
+                  </h3>
+                  <br />
+                  <CrossChainBridge />
+                  <div className="modal-action">
+                    <label htmlFor="my-modal" className="btn bg-[#f71953] text-white  text-xs  m-3 ">
+                      Close
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
             {/* </div> */}
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>
@@ -156,7 +183,11 @@ const OrgContainer = ({ orgName, address }) => {
           </div>
         </div>
         <div className="mx-auto w-1/2 px-4 mx-4">
-          <OrgChat orgAddress={org?.orgAddress} orgChatss={org?.chats} orgname={orgName}/>
+          <OrgChat
+            orgAddress={org?.orgAddress}
+            orgChatss={org?.chats}
+            orgname={orgName}
+          />
         </div>
       </div>
     </div>
