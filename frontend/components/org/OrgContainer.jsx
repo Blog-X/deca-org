@@ -68,7 +68,7 @@ const OrgContainer = ({ orgName, address }) => {
             {org?.hostAddress == myAddress && (
               <div className="host-controls ">
                 <Link href={"/sbt"}>
-                  <button className=" btn  bg-[#f71953] text-white  text-xs  m-3">
+                  <button className=" btn  bg-[#f71953] text-white  text-xs  m-3 w-48 ">
                     Add a member
                   </button>
                 </Link>
@@ -93,7 +93,7 @@ const OrgContainer = ({ orgName, address }) => {
             </div>
             <div className="host-controls ">
               <button
-                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3 w-48 "
                 onClick={() => {
                   router.push("/stream/" + orgName);
                 }}
@@ -105,7 +105,7 @@ const OrgContainer = ({ orgName, address }) => {
             {/* <hr /> */}
             <div className="host-controls ">
               <button
-                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3 w-48 "
                 onClick={() => {
                   setMeetLink("/meeting/" + orgName);
                   console.log(meetLink);
@@ -122,7 +122,7 @@ const OrgContainer = ({ orgName, address }) => {
             )}
             <div className="host-controls ">
               <button
-                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3 w-48 "
                 onClick={() => {
                   router.push("/mint/" + orgName);
                 }}
@@ -132,7 +132,7 @@ const OrgContainer = ({ orgName, address }) => {
             </div>
             <div className="host-controls ">
               <button
-                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3 w-48 "
                 onClick={() => {
                   router.push("/upload/" + orgName);
                 }}
@@ -142,7 +142,7 @@ const OrgContainer = ({ orgName, address }) => {
             </div>
             <div className="host-controls ">
               {/* The button to open modal */}
-              <label htmlFor="my-modal" className="btn  bg-[#f71953] text-white  text-xs  m-3 ">
+              <label htmlFor="my-modal" className="btn  bg-[#f71953] text-white  text-xs  m-3 w-48  ">
                 Cross-chain token exchange
               </label>
 
@@ -156,7 +156,7 @@ const OrgContainer = ({ orgName, address }) => {
                   <br />
                   <CrossChainBridge />
                   <div className="modal-action">
-                    <label htmlFor="my-modal" className="btn bg-[#f71953] text-white  text-xs  m-3 ">
+                    <label htmlFor="my-modal" className="btn bg-[#f71953] text-white  text-xs  m-3 w-48  ">
                       Close
                     </label>
                   </div>
@@ -165,7 +165,7 @@ const OrgContainer = ({ orgName, address }) => {
             </div>
              <div className="host-controls ">
               <button
-                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3 w-48 "
               >
                 Transfer tokens
               </button>

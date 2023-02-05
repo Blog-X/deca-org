@@ -91,14 +91,63 @@ const CrossChainBridge = () => {
 
   return (
     <div>
-      <input type="text" placeholder="Token amount" className="input input-bordered w-full max-w-xs" onChange={(e) => setTokenAmount(e.target.value)} />
+      <input
+        type="text"
+        placeholder="Token amount"
+        className="input input-bordered input-secondary w-full"
+        onChange={(e) => setTokenAmount(e.target.value)}
+      />
+      <div class="text-sm breadcrumbs mx-auto w-fit mt-5 text-white mt-4">
+        <ul>
+          <li>
+            <button
+              className="btn btn-active btn-primary"
+              onClick={() => {
+                crosschain();
+              }}
+            >
+              Submit tokens
+            </button>
+          </li>
+          <li>
+            <button
+              className="btn btn-active btn-primary"
+              onClick={() => {
+                changeNetwork();
+              }}
+            >
+              Change network
+            </button>
+          </li>
+          <li>
+            <button
+              className="btn btn-active btn-primary"
+              onClick={() => {
+                crosschainmint();
+              }}
+            >
+              Mint tokens
+            </button>
+          </li>
+        </ul>
+      </div>
 
-      <button className="btn btn-active" onClick={() => {
-        crosschain();
-      }}>Button</button>
-      <button className="btn btn-active" onClick={() => {
-        crosschainmint();
-      }}>Button2</button>
+      {/* <button
+        className="btn btn-active btn-primary"
+        onClick={() => {
+          crosschain();
+        }}
+      >
+        Button
+      </button>
+      <button
+        className="btn btn-active btn-primary"
+        onClick={() => {
+          crosschainmint();
+        }}
+      >
+        Button2
+      </button> */}
     </div>
   )
 }
