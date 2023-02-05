@@ -108,10 +108,20 @@ const CrossChainBridge = () => {
             <button
               className="btn btn-active btn-primary"
               onClick={() => {
-                crosschainmint();
+                changeNetwork();
               }}
             >
               Change network
+            </button>
+          </li>
+          <li>
+            <button
+              className="btn btn-active btn-primary"
+              onClick={() => {
+                crosschainmint();
+              }}
+            >
+              Mint tokens
             </button>
           </li>
         </ul>
