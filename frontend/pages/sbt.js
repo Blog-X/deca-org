@@ -1,12 +1,12 @@
-import UploadImage from '@/components/sbt/UploadImage'
-import React from 'react'
+import UploadImage from "@/components/UploadImage";
+import React from "react";
 
 const SbtUpload = () => {
   return (
     <div>
       <UploadImage />
     </div>
-  )
-}
+  );
+};
 
-export default SbtUpload
+export default SbtUpload;
