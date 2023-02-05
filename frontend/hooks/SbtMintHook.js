@@ -50,6 +50,7 @@ export const checkSbtBalance = async (name) => {
     };
     console.log(name);
     const memberAdd = await addMember("my_org", name, res.address);
+
     return res.balance;
   } catch (error) {
     console.log(error);
