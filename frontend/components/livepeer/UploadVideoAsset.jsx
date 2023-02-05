@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useEffect } from 'react';
 import fetchAssets from '@/api/livepeervideo.api';
+import HeroSection from '../org/HeroSection';
 
 
 export default function UploadVideoAsset() {
@@ -85,8 +86,8 @@ export default function UploadVideoAsset() {
 
 
   return (
-
-
+    <div>
+      <HeroSection orgName="📹 DecaOrg Video Assets" />
 
 
     <div className=" grid grid-cols-2 gap-4">
@@ -155,6 +156,7 @@ export default function UploadVideoAsset() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 

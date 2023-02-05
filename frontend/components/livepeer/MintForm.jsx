@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { mint } from "../../utils/mint";
 import fetchStream from "@/api/livepeerstream.api";
 import { Link } from "react-router-dom";
+import HeroSection from "../org/HeroSection";
 
 const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
   const [title, setTitle] = useState("");
@@ -27,6 +28,8 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
   }
 
   return (
+    <div>
+      <HeroSection orgName='DecaOrg NFT Minting 💎'/>
     <div className="flex h-screen justify-center textarea-info items-center box-border  p-4 border-4 ">
       <div className="p-4 m-10 border-2 border-indigo-500 rounded-lg">
       <h1 className='text-bold text-2xl text-center underline '>Previous Stream Recordings:</h1>
@@ -71,6 +74,7 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
       </div>
       <button type="submit" className="file-input file-input-bordered file-input-primary w-full max-w-xs m-10">Choose Video and Mint</button>
     </form>
+    </div>
     </div>
   );
 };

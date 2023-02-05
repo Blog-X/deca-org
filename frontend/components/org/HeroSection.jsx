@@ -7,7 +7,7 @@ const HeroSection = ({orgName, tagline, image}) => {
         <div className="hero-content flex-col lg:flex-row">
           <img
             src='../images/Deca-Org Logo.png'
-            className="max-w-sm rounded-lg shadow-2xl"
+            className="max-w-sm object-scale-down h-48 w-96 rounded-lg shadow-2xl"
           />
           <div>
             <div className="flex flex-col justify-center">
