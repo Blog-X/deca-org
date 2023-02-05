@@ -61,12 +61,13 @@ const OrgMembers = ({ members }) => {
                         console.log(receiverName);
                         setReceiverPeerId(member.peerId);
                         setHidden(!hidden);
+                        // console.log(myEthAddress)
                         
                       }}>
                       <div >
                         <ChatComp
                           sender={myEthAddress}
-                          receiver= {receiverEthAddress} //receiverEthAddress change this at later stage
+                          receiver= '0x0d75194C804C26912F233A0072A4816DDdcf3173' //receiverEthAddress change this at later stage
                           name='Rohan' // change this at later stage
                         />
                       </div>Chat</td>
