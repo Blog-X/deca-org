@@ -1,6 +1,6 @@
 import React from "react";
 
-const HeroSection = ({orgName, tagline, image}) => {
+const HeroSection = ({orgName, tagline, image, }) => {
   return (
     <div>
       <div className="hero max-h/2-screen bg-base-200">
