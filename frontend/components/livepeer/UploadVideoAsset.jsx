@@ -90,73 +90,81 @@ export default function UploadVideoAsset() {
       <HeroSection orgName="📹 DecaOrg Video Assets" />
 
 
-    <div className=" grid grid-cols-2 gap-4">
-      <div className='border-4 border-indigo-500 rounded-lg'>
-       <h1 className='text-bold text-2xl text-center underline p-4'>Uploaded Assets:</h1>
-        {assets && assets.map((asset) => (
-          <div key={asset.id} className='p-2 m-2 border-2 border-indigo-500 rounded-lg ' onClick={() => {
+      <div className=" grid grid-cols-2 gap-4">
+        <div className='border-4 border-indigo-500 rounded-lg'>
+          <h1 className='text-bold text-2xl text-center underline p-4'>Uploaded Assets:</h1>
+          {assets && assets.map((asset) => (
+            <div key={asset.id} className='p-2 m-2 border-2 border-indigo-500 rounded-lg ' onClick={() => {
 
-            playAsset(asset.playbackId);
-            setHidden(!hidden);
-          }}>
-            <h1>{asset.name}</h1>
-            {/* <p>{asset.id}</p> */}
-            {/* <p>{asset.createdAt}</p> */}
-            {/* <p>{asset.playbackId}</p> */}
+              playAsset(asset.playbackId);
+              setHidden(!hidden);
+            }}>
+              <h1>{asset.name}</h1>
+              {/* <p>{asset.id}</p> */}
+              {/* <p>{asset.createdAt}</p> */}
+              {/* <p>{asset.playbackId}</p> */}
 
 
-          </div>
-        ))
-        }
-      </div>
-
-      <div className="hero-content text-center grid grid-rows-4 grid-flow-col gap-4 ">
-        <div className={hidden ? "hidden" : "border-2 mt-2"}>
-
-          <Player playbackId={playbackId} />
+            </div>
+          ))
+          }
         </div>
 
+        <div className="hero-content text-center grid grid-rows-4 grid-flow-col gap-4 ">
+          <div className={hidden ? "hidden" : "border-2 mt-2"}>
 
-
-        {!asset && (
-          <div className='flex-initial w-64  border-solid border-2 border-indigo-500/50 p-10' {...getRootProps()}>
-            <input {...getInputProps()} />
-            <p>Drag and drop or browse files</p>
-
-
-            {error?.message && <p>{error.message}</p>}
+            <Player playbackId={playbackId} />
           </div>
-        )}
 
 
 
-        {asset?.[0]?.playbackId && (
-          <Player title={asset[0].name} playbackId={asset[0].playbackId} />
-        )}
+          {!asset && (
+            <div>
+              <div className='flex flex-row p-4 m-4'>
+              <h1 className='p-4 underline'>Assets Uploaded Using: </h1>
+               <img  src="../images/Livepeer.png" className='object-center' alt="livepeer" width="50" height="50" />
+              </div>
 
-        <div>
-          {metrics?.metrics?.[0] && (
-            <p>Views: {metrics?.metrics?.[0]?.startViews}</p>
+              <div className='flex-initial w-64  m-4 border-solid border-2 border-indigo-500/50 p-10' {...getRootProps()}>
+
+                <input {...getInputProps()} />
+                <p>Drag and drop or browse files</p>
+
+
+                {error?.message && <p>{error.message}</p>}
+              </div>
+            </div>
           )}
 
-          {video ? <p>{video.name}</p> : <p></p>}
 
-          {progressFormatted && <p>{progressFormatted}</p>}
 
-          {!asset?.[0].id && (
-            <button
-              onClick={() => {
-                createAsset?.();
-              }}
-              disabled={isLoading || !createAsset}
-              className=' border-2 border-sky-500 btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3 '
-            >
-              Upload
-            </button>
+          {asset?.[0]?.playbackId && (
+            <Player title={asset[0].name} playbackId={asset[0].playbackId} />
           )}
+
+          <div>
+            {metrics?.metrics?.[0] && (
+              <p>Views: {metrics?.metrics?.[0]?.startViews}</p>
+            )}
+
+            {video ? <p>{video.name}</p> : <p></p>}
+
+            {progressFormatted && <p>{progressFormatted}</p>}
+
+            {!asset?.[0].id && (
+              <button
+                onClick={() => {
+                  createAsset?.();
+                }}
+                disabled={isLoading || !createAsset}
+                className=' border-2 border-sky-500 btn btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-lg m-3 '
+              >
+                Upload
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 
