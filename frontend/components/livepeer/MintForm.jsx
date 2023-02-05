@@ -30,6 +30,7 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
   return (
     <div>
       <HeroSection orgName='DecaOrg NFT Minting 💎'/>
+      
     <div className="flex h-screen justify-center textarea-info items-center box-border  p-4 border-4 ">
       <div className="p-4 m-10 border-2 border-indigo-500 rounded-lg">
       <h1 className='text-bold text-2xl text-center underline '>Previous Stream Recordings:</h1>
@@ -48,6 +49,9 @@ const MintForm = ({ setAppState, chainId, setMessage, setNftInfo }) => {
         ))}
       </div>
     <form onSubmit={(e) => handleSubmit(e)}>
+      <div className='flex flex-row p-4 m-4'>
+    <h1 className="p-4 underline">Minted Using:</h1> <img src="../images/Livepeer.png" className='object-center' alt="livepeer" width="50" height="50" />
+    </div>
       <div className="flex-column p-2" >
         <label>NFT Title</label>
         <input
