@@ -18,6 +18,8 @@ function LoginOptions() {
                 <li className="text-lg">Creation of internal teams</li>
                 <li className="text-lg">Organization chats</li>
                 <li className="text-lg">Team chats</li>
+                <li className="text-lg">Cross-chain token exchange</li>
+                <li className="text-lg">Same chain token exchange</li>
               </ul>
             </div>
             <div className="card-actions justify-end ">

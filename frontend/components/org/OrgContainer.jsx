@@ -163,6 +163,13 @@ const OrgContainer = ({ orgName, address }) => {
                 </div>
               </div>
             </div>
+             <div className="host-controls ">
+              <button
+                className=" btn  bg-[#f71953] text-white  text-xs  m-3"
+              >
+                Transfer tokens
+              </button>
+            </div>
             {/* </div> */}
           </div>
           <h1 className="text-2xl mx-auto w-fit my-10">Teams</h1>
