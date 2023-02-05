@@ -28,6 +28,7 @@ export const mintSBT = async (tokenUrl, address) => {
     console.log(SBTContract);
     let mint = await SBTContract.safeMint(sbt.recieverAddress, sbt.tokenURL);
     console.log("safemint", mint);
+    alert("Soul bound token minted successfully!");
   } catch (error) {
     console.log(error);
   }

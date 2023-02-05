@@ -16,7 +16,7 @@ const Loading = () => {
               cx="12"
               cy="12"
               r="10"
-              stroke="currentColor"
+              stroke="bg-black"
               stroke-width="4"
             ></circle>
             <path
