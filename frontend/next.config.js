@@ -6,5 +6,5 @@ module.exports  = {
     path: '',
   },
   trailingSlash: true,
-
+  future: { webpack5: true },
 }
