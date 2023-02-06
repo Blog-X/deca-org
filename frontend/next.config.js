@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports  = {
   reactStrictMode: true,
   images: {
     loader: 'akamai',
@@ -8,5 +8,3 @@ const nextConfig = {
   trailingSlash: true,
 
 }
-
-module.exports = nextConfig
