@@ -6,7 +6,7 @@
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="left"> Deca-Org is the one-stop destination to take your organisation's day-to-day operations to Filecoin with provable data storage, Cross-Chain bridge, SBT issuance, Video conferencing, live streaming, and much more. Deca-Org is powered by F(E)VM and made for the filecoin ecosystem.
     <br> 
 </p>
 
